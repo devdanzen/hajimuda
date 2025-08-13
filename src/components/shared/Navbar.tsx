@@ -14,7 +14,7 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
-import ColorModeIconDropdown from '@/components/shared/ColorModeIconDropdown';
+import ColorModeIconDropdown from '@/theme/shared/ColorModeIconDropdown';
 import HajiMudaIcon from '../home/HajiMudaIcon';
 import Link from 'next/link';
 

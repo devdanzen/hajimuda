@@ -3,19 +3,18 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Navbar from '@/components/shared/Navbar';
 import AppTheme from '@/theme/shared/AppTheme';
 
-interface PublicLayoutProps {
+interface AuthLayoutProps {
   children: React.ReactNode;
   props: {
     disableCustomTheme?: boolean;
   };
 }
 
-export default function PublicLayout({ children, props }: PublicLayoutProps) {
+export default function AuthLayout({ children, props }: AuthLayoutProps) {
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
 
-      <Navbar />
       <main>{children}</main>
     </AppTheme>
   );

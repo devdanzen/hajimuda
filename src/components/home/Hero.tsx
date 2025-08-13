@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import visuallyHidden from '@mui/utils/visuallyHidden';
 import { styled } from '@mui/material/styles';
-import { Color } from '@/lib/color';
+import { Color } from '@/theme/color';
 
 const StyledBox = styled('div')(({ theme }) => ({
   alignSelf: 'center',
@@ -48,8 +48,7 @@ export default function Hero() {
 
         backgroundImage: `radial-gradient(ellipse 80% 50% at 50% -20%, ${Color.ThemeWhite}, transparent)`,
         ...theme.applyStyles('dark', {
-          backgroundImage:
-            `radial-gradient(ellipse 80% 50% at 50% -20%, ${Color.ThemeGold}, transparent)`,
+          backgroundImage: `radial-gradient(ellipse 80% 50% at 50% -20%, ${Color.ThemeGold}, transparent)`,
         }),
       })}
     >
