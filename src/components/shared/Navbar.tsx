@@ -2,11 +2,13 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import MenuIcon from '@mui/icons-material/Menu';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { Tooltip } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -22,22 +24,17 @@ import HajiMudaIcon from '../home/HajiMudaIcon';
 
 import { Color } from '@/styles/color';
 
-
-
-
-
-
-
-
-
-
-
 const MENU = [
-  { label: 'Beranda', link: '/' },
-  { label: 'Tentang Kami', link: '/tentang-kami' },
-  { label: 'Paket', link: '#' },
-  { label: 'Artikel', link: '#' },
-  { label: 'Kontak Kami', link: 'https://wa.me/6281239019313', isExternal: true },
+  { path: '/', label: 'Beranda', link: '/' },
+  { path: '/tentang-kami', label: 'Tentang Kami', link: '/tentang-kami' },
+  { path: '/paket', label: 'Paket', link: '', isDisabled: true },
+  { path: '/artikel', label: 'Artikel', link: '', isDisabled: true },
+  {
+    path: 'https://wa.me/6281239019313',
+    label: 'Kontak Kami',
+    link: 'https://wa.me/6281239019313',
+    isExternal: true,
+  },
 ];
 
 const StyledToolbar = styled(Toolbar)(() => ({
@@ -77,7 +74,7 @@ const CTAButton = styled(Button)(() => ({
   minWidth: 'auto',
   transition: 'all 0.2s ease-in-out',
   '&:hover': {
-    backgroundColor: Color.ThemeGold,
+    backgroundColor: Color.ThemeGoldDark,
   },
 }));
 
@@ -94,6 +91,7 @@ const HelpButton = styled(IconButton)(() => ({
 
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
+  const pathname = usePathname();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -120,7 +118,7 @@ export default function Navbar() {
           </Box>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 0.5 }}>
-            {MENU.map((item) => (
+            {MENU.map((item) =>
               item.isExternal ? (
                 <a
                   key={item.label}
@@ -129,35 +127,47 @@ export default function Navbar() {
                   rel="noopener noreferrer"
                   style={{ textDecoration: 'none' }}
                 >
-                  <NavButton
-                    variant="text"
-                    endIcon={<OpenInNewIcon sx={{ fontSize: 14 }} />}
-                  >
+                  <NavButton variant="text" endIcon={<OpenInNewIcon sx={{ fontSize: 14 }} />}>
                     {item.label}
                   </NavButton>
                 </a>
               ) : (
-                <Link key={item.label} href={item.link} style={{ textDecoration: 'none' }}>
-                  <NavButton variant="text">
-                    {item.label}
-                  </NavButton>
-                </Link>
+                <Tooltip key={item.label} title={item.isDisabled ? 'Coming Soon' : ''} arrow>
+                  <Link href={item.link} style={{ textDecoration: 'none' }}>
+                    <NavButton
+                      variant="text"
+                      disabled={item.isDisabled}
+                      sx={{
+                        color: pathname === item.path ? Color.ThemeGoldDark : Color.Gray,
+                        textDecoration: pathname === item.path ? 'underline' : 'none',
+                        '&:hover': {
+                          backgroundColor: `${Color.ThemeGold}10`,
+                          color: Color.ThemeGoldDark,
+                        },
+                      }}
+                    >
+                      {item.label}
+                    </NavButton>
+                  </Link>
+                </Tooltip>
               )
-            ))}
+            )}
           </Box>
 
-          <Box
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              gap: 1.5,
-              alignItems: 'center',
-            }}
-          >
-            <HelpButton>
-              <HelpOutlineIcon sx={{ fontSize: 20 }} />
-            </HelpButton>
-            <CTAButton variant="contained">Login</CTAButton>
-          </Box>
+          <Tooltip title="Coming Soon" arrow>
+            <Box
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                gap: 1.5,
+                alignItems: 'center',
+              }}
+            >
+              <HelpButton>
+                <HelpOutlineIcon sx={{ fontSize: 20 }} />
+              </HelpButton>
+              <CTAButton variant="contained">Login</CTAButton>
+            </Box>
+          </Tooltip>
 
           <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
             <IconButton
@@ -194,7 +204,7 @@ export default function Navbar() {
                   </IconButton>
                 </Box>
 
-                {MENU.map((item) => (
+                {MENU.map((item) =>
                   item.isExternal ? (
                     <MenuItem
                       key={item.label}
@@ -217,10 +227,11 @@ export default function Navbar() {
                     <Link key={item.label} href={item.link} style={{ textDecoration: 'none' }}>
                       <MenuItem
                         sx={{
-                          color: Color.ThemeGray,
+                          color: pathname === item.path ? Color.ThemeGold : Color.ThemeGray,
                           fontSize: '18px',
                           fontWeight: 600,
                           py: 2,
+                          textDecoration: pathname === item.path ? 'underline' : 'none',
                           '&:hover': { backgroundColor: `${Color.ThemeGold}10` },
                         }}
                       >
@@ -228,7 +239,7 @@ export default function Navbar() {
                       </MenuItem>
                     </Link>
                   )
-                ))}
+                )}
                 <Divider sx={{ my: 3, borderColor: `${Color.ThemeGoldLight}30` }} />
                 <MenuItem sx={{ p: 0, mb: 2 }}>
                   <CTAButton variant="contained" fullWidth>

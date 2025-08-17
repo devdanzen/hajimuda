@@ -5,5 +5,6 @@ export enum Color {
   ThemeBlack = "#0D0D0D",       // Deep black (gray[900])
   ThemeGray = "#333333",        // Dark gray (gray[700])
   ThemeWhite = "#FAFAFA",       // Pure white (gray[50])
-  ThemeBackground = "#FCFCFC"   // Background white
+  ThemeBackground = "#FCFCFC",  // Background white
+  Gray = "#6B7280"
 }

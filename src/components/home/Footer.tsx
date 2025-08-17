@@ -15,6 +15,8 @@ import Typography from '@mui/material/Typography';
 
 import SitemarkIcon from './HajiMudaIcon';
 
+import { Color } from '@/styles/color';
+
 function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
@@ -64,17 +66,16 @@ export default function Footer() {
             <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
               Konsultasi gratis seputar paket haji, umrah, dan halal trip
             </Typography>
-            <Button 
-              variant="contained" 
+            <Button
+              variant="contained"
               startIcon={<WhatsAppIcon />}
               component="a"
               href="https://wa.me/6281239019313"
               target="_blank"
               rel="noopener noreferrer"
               sx={{
-                backgroundColor: '#25D366',
-                '&:hover': { backgroundColor: '#128C7E' },
-                mt: 1
+                '&:hover': { backgroundColor: Color.ThemeGoldDark },
+                mt: 1,
               }}
             >
               Chat WhatsApp
@@ -88,7 +89,7 @@ export default function Footer() {
             gap: 1,
           }}
         >
-          <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+          <Typography variant="body2" sx={{ fontWeight: 'bold', color: Color.ThemeGoldDark }}>
             Navigasi
           </Typography>
           <Link color="text.secondary" variant="body2" href="/">
@@ -111,7 +112,7 @@ export default function Footer() {
             gap: 1,
           }}
         >
-          <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+          <Typography variant="body2" sx={{ fontWeight: 'bold', color: Color.ThemeGoldDark }}>
             Layanan
           </Typography>
           <Link color="text.secondary" variant="body2" href="#">
@@ -121,7 +122,7 @@ export default function Footer() {
             Paket Haji
           </Link>
           <Link color="text.secondary" variant="body2" href="#">
-            Konsultasi
+            Halal Trip
           </Link>
         </Box>
         <Box
@@ -131,19 +132,25 @@ export default function Footer() {
             gap: 1,
           }}
         >
-          <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+          <Typography variant="body2" sx={{ fontWeight: 'bold', color: Color.ThemeGoldDark }}>
             Kontak
           </Typography>
-          <Link 
-            color="text.secondary" 
-            variant="body2" 
+          <Link
+            color="text.secondary"
+            variant="body2"
             href="https://wa.me/6281239019313"
             target="_blank"
             rel="noopener noreferrer"
           >
             WhatsApp
           </Link>
-          <Link color="text.secondary" variant="body2" href="#">
+          <Link
+            color="text.secondary"
+            variant="body2"
+            href="https://maps.google.com/maps?q=Jl.+Keramat+No.15,+RT.7/RW.1,+Cilandak+Tim.,+Ps.+Minggu,+Kota+Jakarta+Selatan,+Daerah+Khusus+Ibukota+Jakarta+12560"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Alamat Kantor
           </Link>
         </Box>
@@ -199,7 +206,10 @@ export default function Footer() {
             sx={{ alignSelf: 'center' }}
           >
             <Box component="svg" viewBox="0 0 24 24" sx={{ width: 20, height: 20 }}>
-              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" fill="currentColor"/>
+              <path
+                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"
+                fill="currentColor"
+              />
             </Box>
           </IconButton>
         </Stack>

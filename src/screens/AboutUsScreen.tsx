@@ -383,7 +383,7 @@ export default function AboutUsScreen() {
               target="_blank"
               rel="noopener noreferrer"
               sx={{
-                '&:hover': { backgroundColor: '#128C7E' },
+                '&:hover': { backgroundColor: Color.ThemeGoldDark },
               }}
             >
               Chat WhatsApp
