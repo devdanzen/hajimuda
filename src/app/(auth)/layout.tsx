@@ -6,14 +6,11 @@ import AppTheme from '@/styles/shared/AppTheme';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
-  props: {
-    disableCustomTheme?: boolean;
-  };
 }
 
-export default function AuthLayout({ children, props }: AuthLayoutProps) {
+export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
-    <AppTheme {...props}>
+    <AppTheme>
       <CssBaseline enableColorScheme />
 
       <main>{children}</main>
