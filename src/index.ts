@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/vercel-postgres';
+
 import { users } from './db/schema/users';
 
 async function main() {
@@ -13,10 +14,8 @@ async function main() {
   };
 
   await db.insert(users).values(user);
-  console.log('New user created!');
 
-  const usersList = await db.select().from(users);
-  console.log('Getting all users from the database: ', usersList);
+  // const usersList = await db.select().from(users);
   /*
   const users: {
     id: number;
@@ -32,7 +31,6 @@ async function main() {
       age: 22,
     })
     .where(eq(users.email, user.email));
-  console.log('User info updated!');
 }
 
 main();

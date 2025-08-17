@@ -1,5 +1,6 @@
 import * as React from 'react';
 import useEventCallback from '@mui/utils/useEventCallback';
+
 import DialogsContext from './DialogsContext';
 import type { DialogComponent, OpenDialog, OpenDialogOptions } from './useDialogs';
 
@@ -24,10 +25,12 @@ export interface DialogProviderProps {
  */
 export default function DialogsProvider(props: DialogProviderProps) {
   const { children, unmountAfter = 1000 } = props;
+  // @ts-ignore
   const [stack, setStack] = React.useState<DialogStackEntry<any, any>[]>([]);
   const keyPrefix = React.useId();
   const nextId = React.useRef(0);
   const dialogMetadata = React.useRef(
+    // @ts-ignore
     new WeakMap<Promise<any>, DialogStackEntry<any, any>>(),
   );
 
@@ -66,9 +69,7 @@ export default function DialogsProvider(props: DialogProviderProps) {
     return promise;
   });
 
-  const closeDialogUi = useEventCallback(function closeDialogUi<R>(
-    dialog: Promise<R>,
-  ) {
+  const closeDialogUi = useEventCallback(function closeDialogUi<R>(dialog: Promise<R>) {
     setStack((prevStack) =>
       prevStack.map((entry) =>
         entry.promise === dialog ? { ...entry, open: false } : entry,

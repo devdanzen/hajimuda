@@ -15,9 +15,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
+
 import { useDialogs } from '@/hooks/dashboard/useDialogs/useDialogs';
 import useNotifications from '@/hooks/dashboard/useNotifications/useNotifications';
 import { deleteOne as deleteUser, getOne as getUser, type User } from '@/data/dashboard/users';
+
 import PageContainer from '../PageContainer';
 
 export default function UserShow({ userId }: { userId: number }) {

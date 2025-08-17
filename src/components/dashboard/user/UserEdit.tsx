@@ -5,6 +5,7 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useRouter } from 'next/navigation';
+
 import useNotifications from '@/hooks/dashboard/useNotifications/useNotifications';
 import {
   getOne as getUser,
@@ -12,8 +13,10 @@ import {
   validate as validateUser,
   type User,
 } from '@/data/dashboard/users';
-import UserForm, { type FormFieldValue, type UserFormState } from './UserForm';
+
 import PageContainer from '../PageContainer';
+
+import UserForm, { type FormFieldValue, type UserFormState } from './UserForm';
 
 function UserEditForm({
   initialValues,

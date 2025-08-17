@@ -2,8 +2,14 @@
 
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppTheme from '@/theme/shared/AppTheme';
-import { dataGridCustomizations, datePickersCustomizations, formInputCustomizations, sidebarCustomizations } from '@/theme/dashboard/customizations';
+
+import AppTheme from '@/styles/shared/AppTheme';
+import {
+  dataGridCustomizations,
+  datePickersCustomizations,
+  formInputCustomizations,
+  sidebarCustomizations,
+} from '@/styles/dashboard/customizations';
 import NotificationsProvider from '@/hooks/dashboard/useNotifications/NotificationsProvider';
 import DialogsProvider from '@/hooks/dashboard/useDialogs/DialogsProvider';
 

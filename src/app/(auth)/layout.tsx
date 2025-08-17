@@ -1,7 +1,7 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import Navbar from '@/components/shared/Navbar';
-import AppTheme from '@/theme/shared/AppTheme';
+
+import AppTheme from '@/styles/shared/AppTheme';
 
 interface AuthLayoutProps {
   children: React.ReactNode;

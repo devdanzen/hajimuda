@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import type {} from '@mui/material/themeCssVarsAugmentation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Link from 'next/link';
+
 import DashboardSidebarContext from '@/context/dashboard/DashboardSidebarContext';
 import { MINI_DRAWER_WIDTH } from '@/lib/dashboard/constants';
 

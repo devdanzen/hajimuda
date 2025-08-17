@@ -1,5 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { integer, pgEnum, pgTable, text, varchar } from 'drizzle-orm/pg-core';
+
 import { users } from './users';
 
 export const categoriesEnum = pgEnum('categories', ['teknologi', 'berita', 'edukasi']);

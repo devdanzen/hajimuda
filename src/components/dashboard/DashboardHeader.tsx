@@ -12,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import Stack from '@mui/material/Stack';
 import Link from 'next/link';
+
 import ThemeSwitcher from './ThemeSwitcher';
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({

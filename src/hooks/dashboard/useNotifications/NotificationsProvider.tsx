@@ -9,6 +9,7 @@ import type { SnackbarCloseReason } from '@mui/material/Snackbar';
 import type { CloseReason } from '@mui/material/SpeedDial';
 import CloseIcon from '@mui/icons-material/Close';
 import useSlotProps from '@mui/utils/useSlotProps';
+
 import NotificationsContext from './NotificationsContext';
 import type {
   CloseNotification,

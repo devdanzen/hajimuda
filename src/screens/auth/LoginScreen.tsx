@@ -1,12 +1,10 @@
-'use client'
+'use client';
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
@@ -15,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import ColorModeSelect from '@/theme/shared/ColorModeSelect';
+
 import HajiMudaIcon from '@/components/home/HajiMudaIcon';
 import ForgotPassword from '@/components/auth/ForgotPassword';
 
@@ -32,10 +30,6 @@ const Card = styled(MuiCard)(({ theme }) => ({
   },
   boxShadow:
     'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
-  ...theme.applyStyles('dark', {
-    boxShadow:
-      'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
-  }),
 }));
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
@@ -53,13 +47,10 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
     inset: 0,
     backgroundImage: 'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
     backgroundRepeat: 'no-repeat',
-    ...theme.applyStyles('dark', {
-      backgroundImage: 'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
-    }),
   },
 }));
 
-export default function LoginScreen(props: { disableCustomTheme?: boolean }) {
+export default function LoginScreen() {
   const [usernameError, setUsernameError] = React.useState(false);
   const [usernameErrorMessage, setUsernameErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
@@ -80,7 +71,7 @@ export default function LoginScreen(props: { disableCustomTheme?: boolean }) {
       return;
     }
     const data = new FormData(event.currentTarget);
-    console.log({
+    console.info({
       username: data.get('username'),
       password: data.get('password'),
     });
@@ -116,7 +107,6 @@ export default function LoginScreen(props: { disableCustomTheme?: boolean }) {
   return (
     <>
       <SignInContainer direction="column" justifyContent="space-between">
-        <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
         <Card variant="outlined">
           <HajiMudaIcon />
           <Typography

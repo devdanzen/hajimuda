@@ -9,92 +9,61 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import { useColorScheme } from '@mui/material/styles';
+
+import { Color } from '@/styles/color';
+import { sectionSubtitleSx } from '@/styles/typography';
 
 const userTestimonials = [
   {
-    avatar: <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />,
-    name: 'Remy Sharp',
-    occupation: 'Senior Engineer',
+    avatar: (
+      <Avatar
+        alt="Alsuntika"
+        src="https://lh3.googleusercontent.com/a-/ALV-UjUHlbOEE3xb_VQnAgfSTg2DcIrgurkkXOSx8K6JqVvEPbwSyoQ=w72-h72-p-rp-mo-br100"
+      />
+    ),
+    name: 'Alsuntika',
+    package: 'Umroh Barokah',
     testimonial:
-      "I absolutely love how versatile this product is! Whether I'm tackling work projects or indulging in my favorite hobbies, it seamlessly adapts to my changing needs. Its intuitive design has truly enhanced my daily routine, making tasks more efficient and enjoyable.",
+      'Saya mengenal Tursinai Tour saat pameran dan sangat terkesan dengan pelayanan timnya. Penjelasan tentang program umroh dan haji disampaikan dengan sabar, detail, dan transparan sehingga mudah dipahami. Stafnya ramah, komunikatif, dan tidak segan menjawab semua pertanyaan jamaah. Booth pamerannya juga tertata rapi dan informatif. Dari cara mereka melayani saja sudah terasa profesional dan amanah. InsyaAllah jadi makin yakin memilih Tursinai Tour untuk perjalanan ibadah ke Tanah Suci.',
   },
   {
-    avatar: <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />,
-    name: 'Travis Howard',
-    occupation: 'Lead Product Designer',
-    testimonial:
-      "One of the standout features of this product is the exceptional customer support. In my experience, the team behind this product has been quick to respond and incredibly helpful. It's reassuring to know that they stand firmly behind their product.",
+    avatar: (
+      <Avatar
+        alt="ahmadwafiq pwid"
+        src="https://lh3.googleusercontent.com/a-/ALV-UjUkbpehbG7kqGC4KI-zdCSczgDv1uWFksuwXyJfDzRgk6THisM=w72-h72-p-rp-mo-br100"
+      />
+    ),
+    name: 'ahmadwafiq pwid',
+    package: 'Umroh Ekonomis',
+    testimonial: 'tempatnya sangat nyaman,bersih,dan rapi',
   },
   {
-    avatar: <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />,
-    name: 'Cindy Baker',
-    occupation: 'CTO',
+    avatar: (
+      <Avatar
+        alt="NADYA AFANI"
+        src="https://lh3.googleusercontent.com/a/ACg8ocIyKypiT4yQg6HZvScitxGgxdhaq4YPRvgz-wZY60_xx6sPdw=w72-h72-p-rp-mo-br100"
+      />
+    ),
+    name: 'NADYA AFANI',
+    package: 'Umroh Eksekutif',
     testimonial:
-      'The level of simplicity and user-friendliness in this product has significantly simplified my life. I appreciate the creators for delivering a solution that not only meets but exceeds user expectations.',
+      'Masyaa Allah, Alhamdulillah Tursina sangat bagus penawarannya. Semoga bisa berangkat besok bersama tursina',
   },
   {
-    avatar: <Avatar alt="Remy Sharp" src="/static/images/avatar/4.jpg" />,
-    name: 'Julia Stewart',
-    occupation: 'Senior Engineer',
-    testimonial:
-      "I appreciate the attention to detail in the design of this product. The small touches make a big difference, and it's evident that the creators focused on delivering a premium experience.",
+    avatar: <Avatar alt="Maya Kartika" src="/static/images/avatar/4.jpg" />,
+    name: 'Maya Kartika',
+    package: 'Haji Khusus',
+    testimonial: 'Alhamdulillah ibadah berjalan lancar, fasilitas premium sesuai harapan.',
   },
   {
-    avatar: <Avatar alt="Travis Howard" src="/static/images/avatar/5.jpg" />,
-    name: 'John Smith',
-    occupation: 'Product Designer',
-    testimonial:
-      "I've tried other similar products, but this one stands out for its innovative features. It's clear that the makers put a lot of thought into creating a solution that truly addresses user needs.",
-  },
-  {
-    avatar: <Avatar alt="Cindy Baker" src="/static/images/avatar/6.jpg" />,
-    name: 'Daniel Wolf',
-    occupation: 'CDO',
-    testimonial:
-      "The quality of this product exceeded my expectations. It's durable, well-designed, and built to last. Definitely worth the investment!",
+    avatar: <Avatar alt="Budi Santoso" src="/static/images/avatar/5.jpg" />,
+    name: 'Budi Santoso',
+    package: 'Haji Mujamalah',
+    testimonial: 'Pelayanan profesional dari awal hingga akhir. Terima kasih HajiMuda.',
   },
 ];
-
-const darkModeLogos = [
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/6560628e8573c43893fe0ace_Sydney-white.svg',
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f4d520d0517ae8e8ddf13_Bern-white.svg',
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f46794c159024c1af6d44_Montreal-white.svg',
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e891fa22f89efd7477a_TerraLight.svg',
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/6560a09d1f6337b1dfed14ab_colorado-white.svg',
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f5caa77bf7d69fb78792e_Ankara-white.svg',
-];
-
-const lightModeLogos = [
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/6560628889c3bdf1129952dc_Sydney-black.svg',
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f4d4d8b829a89976a419c_Bern-black.svg',
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f467502f091ccb929529d_Montreal-black.svg',
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e911fa22f2203d7514c_TerraDark.svg',
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/6560a0990f3717787fd49245_colorado-black.svg',
-  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f5ca4e548b0deb1041c33_Ankara-black.svg',
-];
-
-const logoStyle = {
-  width: '64px',
-  opacity: 0.3,
-};
 
 export default function Testimonials() {
-  const { mode, systemMode } = useColorScheme();
-
-  let logos;
-  if (mode === 'system') {
-    if (systemMode === 'light') {
-      logos = lightModeLogos;
-    } else {
-      logos = darkModeLogos;
-    }
-  } else if (mode === 'light') {
-    logos = lightModeLogos;
-  } else {
-    logos = darkModeLogos;
-  }
-
   return (
     <Container
       id="testimonials"
@@ -114,12 +83,21 @@ export default function Testimonials() {
           textAlign: { sm: 'left', md: 'center' },
         }}
       >
-        <Typography component="h2" variant="h4" gutterBottom sx={{ color: 'text.primary' }}>
+        <Typography
+          component="h2"
+          variant="h4"
+          gutterBottom
+          sx={{
+            color: Color.ThemeGoldDark,
+            fontFamily: 'var(--font-title), cursive',
+            fontWeight: 700,
+            fontSize: { xs: '1.8rem', sm: '2.2rem' },
+          }}
+        >
           Testimonials
         </Typography>
-        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-          See what our customers love about our products. Discover how we excel in efficiency,
-          durability, and satisfaction. Join us for quality, innovation, and reliable support.
+        <Typography variant="h6" sx={sectionSubtitleSx}>
+          Apa kata pelanggan kami tentang layanan tour kami
         </Typography>
       </Box>
       <Grid container spacing={2}>
@@ -149,9 +127,8 @@ export default function Testimonials() {
                 <CardHeader
                   avatar={testimonial.avatar}
                   title={testimonial.name}
-                  subheader={testimonial.occupation}
+                  subheader={testimonial.package}
                 />
-                <img src={logos[index]} alt={`Logo ${index + 1}`} style={logoStyle} />
               </Box>
             </Card>
           </Grid>

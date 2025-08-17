@@ -22,9 +22,11 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+
 import { useDialogs } from '@/hooks/dashboard/useDialogs/useDialogs';
 import useNotifications from '@/hooks/dashboard/useNotifications/useNotifications';
 import { deleteOne as deleteUser, getMany as getUsers, type User } from '@/data/dashboard/users';
+
 import PageContainer from '../PageContainer';
 
 const INITIAL_PAGE_SIZE = 10;

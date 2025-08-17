@@ -4,67 +4,54 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import InputLabel from '@mui/material/InputLabel';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import visuallyHidden from '@mui/utils/visuallyHidden';
-import { styled } from '@mui/material/styles';
-import { Color } from '@/theme/color';
 
-const StyledBox = styled('div')(({ theme }) => ({
-  alignSelf: 'center',
-  width: '100%',
-  height: 400,
-  marginTop: theme.spacing(8),
-  borderRadius: (theme.vars || theme).shape.borderRadius,
-  outline: '6px solid',
-  outlineColor: 'hsla(220, 25%, 80%, 0.2)',
-  border: '1px solid',
-  borderColor: (theme.vars || theme).palette.grey[200],
-  boxShadow: '0 0 12px 8px hsla(220, 25%, 80%, 0.2)',
-  backgroundImage: `url(${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/screenshots/material-ui/getting-started/templates/dashboard.jpg)`,
-  backgroundSize: 'cover',
-  [theme.breakpoints.up('sm')]: {
-    marginTop: theme.spacing(10),
-    height: 700,
-  },
-  ...theme.applyStyles('dark', {
-    boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
-    backgroundImage: `url(${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/screenshots/material-ui/getting-started/templates/dashboard-dark.jpg)`,
-    outlineColor: 'hsla(220, 20%, 42%, 0.1)',
-    borderColor: (theme.vars || theme).palette.grey[700],
-  }),
-}));
+import { Color } from '@/styles/color';
 
 export default function Hero() {
   return (
     <Box
       id="hero"
-      sx={(theme) => ({
+      sx={{
         width: '100%',
+        height: { xs: '60vh', sm: '80vh', md: '100vh' },
+        position: 'relative',
+        backgroundImage: 'url(/assets/images/hajimuda_hero.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-
-        backgroundImage: `radial-gradient(ellipse 80% 50% at 50% -20%, ${Color.ThemeWhite}, transparent)`,
-        ...theme.applyStyles('dark', {
-          backgroundImage: `radial-gradient(ellipse 80% 50% at 50% -20%, ${Color.ThemeGold}, transparent)`,
-        }),
-      })}
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        pt: { xs: '72px', sm: '72px', md: 0 },
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          zIndex: 1,
+        },
+      }}
     >
       <Container
         sx={{
+          position: 'relative',
+          zIndex: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          pt: { xs: 14, sm: 20 },
-          pb: { xs: 8, sm: 12 },
+          textAlign: 'center',
+          color: 'white',
         }}
       >
         <Stack
-          spacing={2}
+          spacing={3}
           useFlexGap
-          sx={{ alignItems: 'center', width: { xs: '100%', sm: '70%' } }}
+          sx={{ alignItems: 'center', width: { xs: '100%', sm: '80%', md: '70%' } }}
         >
           <Typography
             variant="h1"
@@ -72,76 +59,84 @@ export default function Hero() {
               display: 'flex',
               flexDirection: { xs: 'column', sm: 'row' },
               alignItems: 'center',
-              fontSize: 'clamp(3rem, 10vw, 3.5rem)',
+              fontSize: { xs: '1.8rem', sm: '2.5rem', md: '3.5rem' },
+              fontWeight: 'bold',
+              color: 'white',
+              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
+              lineHeight: { xs: 1.2, sm: 1.3, md: 1.4 },
             }}
           >
-            Our&nbsp;latest&nbsp;
+            Wujudkan Haji & Umrah yang Damai Bersama
             <Typography
-              component="span"
-              variant="h1"
-              sx={(theme) => ({
+              sx={{
                 fontSize: 'inherit',
-                color: 'primary.main',
-                ...theme.applyStyles('dark', {
-                  color: 'primary.light',
-                }),
-              })}
+                fontWeight: 'inherit',
+                color: Color.ThemeGold,
+                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
+              }}
             >
-              products
+              HajiMuda
             </Typography>
           </Typography>
           <Typography
+            variant="h5"
             sx={{
               textAlign: 'center',
-              color: 'text.secondary',
+              color: 'white',
               width: { sm: '100%', md: '80%' },
+              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.7)',
+              lineHeight: 1.6,
+              fontSize: { xs: '0.9rem', sm: '1.2rem', md: '1.5rem' },
             }}
           >
-            Explore our cutting-edge dashboard, delivering high-quality solutions tailored to your
-            needs. Elevate your experience with top-tier features and services.
+            &ldquo;Haji dan umrah menghapus dosa serta kemiskinan, sebagaimana api menghilangkan
+            karat dari logam. Tiada pahala bagi haji mabrur kecuali surga.&ldquo; (HR. An Nasai,
+            Tirmidzi, Ahmad)
           </Typography>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            spacing={1}
-            useFlexGap
-            sx={{ pt: 2, width: { xs: '100%', sm: '350px' } }}
-          >
-            <InputLabel htmlFor="email-hero" sx={visuallyHidden}>
-              Email
-            </InputLabel>
-            <TextField
-              id="email-hero"
-              hiddenLabel
-              size="small"
-              variant="outlined"
-              aria-label="Enter your email address"
-              placeholder="Your email address"
-              fullWidth
-              slotProps={{
-                htmlInput: {
-                  autoComplete: 'off',
-                  'aria-label': 'Enter your email address',
-                },
-              }}
-            />
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} useFlexGap sx={{ pt: 2 }}>
             <Button
               variant="contained"
-              color="primary"
-              size="small"
-              sx={{ minWidth: 'fit-content' }}
+              size="large"
+              component="a"
+              href="https://wa.me/6281239019313?text=Halo,%20saya%20ingin%20konsultasi%20gratis%20tentang%20paket%20Haji%20dan%20Umrah"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                backgroundColor: Color.ThemeGold,
+                color: 'white',
+                fontWeight: 'bold',
+                px: { xs: 3, sm: 4 },
+                py: { xs: 1.2, sm: 1.5 },
+                fontSize: { xs: '0.9rem', sm: '1.1rem' },
+                '&:hover': {
+                  backgroundColor: Color.ThemeGoldLight,
+                },
+              }}
             >
-              Start now
+              Konsultasi Gratis
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              component="a"
+              href="#packages"
+              sx={{
+                borderColor: 'white',
+                color: 'white',
+                fontWeight: 'bold',
+                px: { xs: 3, sm: 4 },
+                py: { xs: 1.2, sm: 1.5 },
+                fontSize: { xs: '0.9rem', sm: '1.1rem' },
+                '&:hover': {
+                  borderColor: Color.ThemeGold,
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                },
+              }}
+            >
+              Pelajari Lebih Lanjut
             </Button>
           </Stack>
-          <Typography variant="caption" color="text.secondary" sx={{ textAlign: 'center' }}>
-            By clicking &quot;Start now&quot; you agree to our&nbsp;
-            <Link href="#" color="primary">
-              Terms & Conditions
-            </Link>
-            .
-          </Typography>
         </Stack>
-        <StyledBox id="image" />
       </Container>
     </Box>
   );

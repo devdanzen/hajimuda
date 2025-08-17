@@ -1,5 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { integer, pgEnum, pgTable, varchar } from 'drizzle-orm/pg-core';
+
 import { articles } from './articles';
 
 export const rolesEnum = pgEnum('roles', ['member', 'admin']);

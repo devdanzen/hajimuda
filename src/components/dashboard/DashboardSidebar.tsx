@@ -13,12 +13,14 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
 import LayersIcon from '@mui/icons-material/Layers';
 import { usePathname } from 'next/navigation';
+
 import DashboardSidebarContext from '@/context/dashboard/DashboardSidebarContext';
 import { DRAWER_WIDTH, MINI_DRAWER_WIDTH } from '@/lib/dashboard/constants';
+import { getDrawerSxTransitionMixin, getDrawerWidthTransitionMixin } from '@/lib/dashboard/mixins';
+
 import DashboardSidebarPageItem from './DashboardSidebarPageItem';
 import DashboardSidebarHeaderItem from './DashboardSidebarHeaderItem';
 import DashboardSidebarDividerItem from './DashboardSidebarDividerItem';
-import { getDrawerSxTransitionMixin, getDrawerWidthTransitionMixin } from '@/lib/dashboard/mixins';
 
 export interface DashboardSidebarProps {
   expanded?: boolean;

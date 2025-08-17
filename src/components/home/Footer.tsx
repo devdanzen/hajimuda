@@ -5,22 +5,21 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
-import InputLabel from '@mui/material/InputLabel';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import TwitterIcon from '@mui/icons-material/X';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+
 import SitemarkIcon from './HajiMudaIcon';
 
 function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
       {'Copyright © '}
-      <Link color="text.secondary" href="https://mui.com/">
-        Sitemark
+      <Link color="text.secondary" href="https://hajimuda.id/">
+        HajiMuda
       </Link>
       &nbsp;
       {new Date().getFullYear()}
@@ -59,33 +58,26 @@ export default function Footer() {
           <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
             <SitemarkIcon />
             <Typography variant="body2" gutterBottom sx={{ fontWeight: 600, mt: 2 }}>
-              Join the newsletter
+              Hubungi Kami via WhatsApp
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-              Subscribe for weekly updates. No spams ever!
+              Konsultasi gratis seputar paket haji, umrah, dan halal trip
             </Typography>
-            <InputLabel htmlFor="email-newsletter">Email</InputLabel>
-            <Stack direction="row" spacing={1} useFlexGap>
-              <TextField
-                id="email-newsletter"
-                hiddenLabel
-                size="small"
-                variant="outlined"
-                fullWidth
-                aria-label="Enter your email address"
-                placeholder="Your email address"
-                slotProps={{
-                  htmlInput: {
-                    autoComplete: 'off',
-                    'aria-label': 'Enter your email address',
-                  },
-                }}
-                sx={{ width: '250px' }}
-              />
-              <Button variant="contained" color="primary" size="small" sx={{ flexShrink: 0 }}>
-                Subscribe
-              </Button>
-            </Stack>
+            <Button 
+              variant="contained" 
+              startIcon={<WhatsAppIcon />}
+              component="a"
+              href="https://wa.me/6281239019313"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                backgroundColor: '#25D366',
+                '&:hover': { backgroundColor: '#128C7E' },
+                mt: 1
+              }}
+            >
+              Chat WhatsApp
+            </Button>
           </Box>
         </Box>
         <Box
@@ -96,22 +88,19 @@ export default function Footer() {
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-            Product
+            Navigasi
           </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
-            Features
+          <Link color="text.secondary" variant="body2" href="/">
+            Beranda
+          </Link>
+          <Link color="text.secondary" variant="body2" href="/tentang-kami">
+            Tentang Kami
           </Link>
           <Link color="text.secondary" variant="body2" href="#">
-            Testimonials
+            Paket
           </Link>
           <Link color="text.secondary" variant="body2" href="#">
-            Highlights
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Pricing
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            FAQs
+            Artikel
           </Link>
         </Box>
         <Box
@@ -122,16 +111,16 @@ export default function Footer() {
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-            Company
+            Layanan
           </Typography>
           <Link color="text.secondary" variant="body2" href="#">
-            About us
+            Paket Umrah
           </Link>
           <Link color="text.secondary" variant="body2" href="#">
-            Careers
+            Paket Haji
           </Link>
           <Link color="text.secondary" variant="body2" href="#">
-            Press
+            Konsultasi
           </Link>
         </Box>
         <Box
@@ -142,16 +131,19 @@ export default function Footer() {
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-            Legal
+            Kontak
           </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
-            Terms
+          <Link 
+            color="text.secondary" 
+            variant="body2" 
+            href="https://wa.me/6281239019313"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            WhatsApp
           </Link>
           <Link color="text.secondary" variant="body2" href="#">
-            Privacy
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Contact
+            Alamat Kantor
           </Link>
         </Box>
       </Box>
@@ -166,13 +158,6 @@ export default function Footer() {
         }}
       >
         <div>
-          <Link color="text.secondary" variant="body2" href="#">
-            Privacy Policy
-          </Link>
-          <Typography sx={{ display: 'inline', mx: 0.5, opacity: 0.5 }}>&nbsp;•&nbsp;</Typography>
-          <Link color="text.secondary" variant="body2" href="#">
-            Terms of Service
-          </Link>
           <Copyright />
         </div>
         <Stack
@@ -184,29 +169,37 @@ export default function Footer() {
           <IconButton
             color="inherit"
             size="small"
-            href="https://github.com/mui"
-            aria-label="GitHub"
+            href="https://www.instagram.com/bongtjandra/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
             sx={{ alignSelf: 'center' }}
           >
-            <GitHubIcon />
+            <InstagramIcon />
           </IconButton>
           <IconButton
             color="inherit"
             size="small"
-            href="https://x.com/MaterialUI"
-            aria-label="X"
+            href="https://www.youtube.com/@bongtjandra"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
             sx={{ alignSelf: 'center' }}
           >
-            <TwitterIcon />
+            <YouTubeIcon />
           </IconButton>
           <IconButton
             color="inherit"
             size="small"
-            href="https://www.linkedin.com/company/mui/"
-            aria-label="LinkedIn"
+            href="https://www.tiktok.com/@bong.tjandra.ofc"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok"
             sx={{ alignSelf: 'center' }}
           >
-            <LinkedInIcon />
+            <Box component="svg" viewBox="0 0 24 24" sx={{ width: 20, height: 20 }}>
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" fill="currentColor"/>
+            </Box>
           </IconButton>
         </Stack>
       </Box>
