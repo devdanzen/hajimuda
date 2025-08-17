@@ -6,9 +6,26 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { Color } from '@/styles/color';
+
+const StyledButton = styled(Button)<{ 
+  component?: React.ElementType;
+  target?: string;
+  rel?: string;
+}>(({ theme }) => ({
+  fontWeight: 'bold',
+  padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
+  fontSize: '0.875rem',
+  minHeight: '36px',
+  [theme.breakpoints.up('md')]: {
+    padding: `${theme.spacing(1.5)} ${theme.spacing(3)}`,
+    fontSize: '1rem',
+    minHeight: '42px',
+  },
+}));
 
 export default function Hero() {
   return (
@@ -16,7 +33,7 @@ export default function Hero() {
       id="hero"
       sx={{
         width: '100%',
-        height: { xs: '60vh', sm: '80vh', md: '100vh' },
+        height: { xs: '80vh', sm: '90vh', md: '100vh' },
         position: 'relative',
         backgroundImage: 'url(/assets/images/hajimuda_hero.png)',
         backgroundSize: 'cover',
@@ -52,7 +69,10 @@ export default function Hero() {
         <Stack
           spacing={3}
           useFlexGap
-          sx={{ alignItems: 'center', width: { xs: '100%', sm: '80%', md: '70%' } }}
+          sx={{
+            alignItems: 'center',
+            width: { xs: '100%', sm: '80%', md: '70%' },
+          }}
         >
           <Typography
             variant="h1"
@@ -95,9 +115,9 @@ export default function Hero() {
             Tirmidzi, Ahmad)
           </Typography>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} useFlexGap sx={{ pt: 2 }}>
-            <Button
-              variant="contained"
+            <StyledButton
               size="large"
+              variant="contained"
               component="a"
               href="https://wa.me/6281239019313?text=Halo,%20saya%20ingin%20konsultasi%20gratis%20tentang%20paket%20Haji%20dan%20Umrah"
               target="_blank"
@@ -105,37 +125,29 @@ export default function Hero() {
               sx={{
                 backgroundColor: Color.ThemeGold,
                 color: 'white',
-                fontWeight: 'bold',
-                px: { xs: 3, sm: 4 },
-                py: { xs: 1.2, sm: 1.5 },
-                fontSize: { xs: '0.9rem', sm: '1.1rem' },
                 '&:hover': {
-                  backgroundColor: Color.ThemeGoldLight,
+                  backgroundColor: Color.ThemeGoldDark,
                 },
               }}
             >
               Konsultasi Gratis
-            </Button>
-            <Button
-              variant="outlined"
+            </StyledButton>
+            <StyledButton
               size="large"
+              variant="outlined"
               component="a"
               href="#packages"
               sx={{
                 borderColor: 'white',
                 color: 'white',
-                fontWeight: 'bold',
-                px: { xs: 3, sm: 4 },
-                py: { xs: 1.2, sm: 1.5 },
-                fontSize: { xs: '0.9rem', sm: '1.1rem' },
                 '&:hover': {
-                  borderColor: Color.ThemeGold,
+                  borderColor: Color.ThemeGoldDark,
                   backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 },
               }}
             >
               Pelajari Lebih Lanjut
-            </Button>
+            </StyledButton>
           </Stack>
         </Stack>
       </Container>

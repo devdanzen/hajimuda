@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'HajiMuda' }],
   creator: 'HajiMuda',
   publisher: 'HajiMuda',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({

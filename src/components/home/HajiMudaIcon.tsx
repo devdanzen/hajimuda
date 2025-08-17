@@ -6,7 +6,7 @@ import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
 export default function HajiMudaIcon(props: SvgIconProps) {
   return (
-    <SvgIcon {...props} sx={{ height: 31.5, width: 165, mr: 2, ...props.sx }} viewBox="0 0 110 20">
+    <SvgIcon {...props} sx={{ height: 42, width: 220, mr: 2, ...props.sx }} viewBox="0 0 110 20">
       <title>HajiMuda</title>
 
       {/* Left mark: crescent + star */}
