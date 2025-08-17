@@ -1,7 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { type Theme, SxProps } from '@mui/material/styles';
+import Link from 'next/link';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -11,10 +13,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import { SxProps,type Theme } from '@mui/material/styles';
 import type {} from '@mui/material/themeCssVarsAugmentation';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Link from 'next/link';
+import Typography from '@mui/material/Typography';
 
 import DashboardSidebarContext from '@/context/dashboard/DashboardSidebarContext';
 import { MINI_DRAWER_WIDTH } from '@/lib/dashboard/constants';

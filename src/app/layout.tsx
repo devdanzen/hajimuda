@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Roboto_Slab, Cinzel_Decorative } from "next/font/google";
+import { Cinzel_Decorative,Roboto_Slab } from "next/font/google";
+
+import CustomThemeProvider from "@/components/theme-provider";
 
 import "./globals.css";
-import CustomThemeProvider from "@/components/theme-provider";
 
 const robotoSlab = Roboto_Slab({
   subsets: ["latin"],

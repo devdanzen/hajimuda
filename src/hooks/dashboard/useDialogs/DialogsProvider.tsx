@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import useEventCallback from '@mui/utils/useEventCallback';
 
 import DialogsContext from './DialogsContext';
@@ -25,12 +26,12 @@ export interface DialogProviderProps {
  */
 export default function DialogsProvider(props: DialogProviderProps) {
   const { children, unmountAfter = 1000 } = props;
-  // @ts-ignore
+  // @ts-nocheck
   const [stack, setStack] = React.useState<DialogStackEntry<any, any>[]>([]);
   const keyPrefix = React.useId();
   const nextId = React.useRef(0);
   const dialogMetadata = React.useRef(
-    // @ts-ignore
+    // @ts-nocheck
     new WeakMap<Promise<any>, DialogStackEntry<any, any>>(),
   );
 

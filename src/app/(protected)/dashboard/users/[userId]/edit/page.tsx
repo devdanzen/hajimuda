@@ -1,5 +1,6 @@
-import DashboardScreen from '@/screens/dashboard/DashboardScreen';
 import UserEdit from '@/components/dashboard/user/UserEdit';
+
+import DashboardScreen from '@/screens/dashboard/DashboardScreen';
 
 interface UserEditPageProps {
   params: Promise<{

@@ -1,15 +1,16 @@
 'use client';
 
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import Link from 'next/link';
+
+import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import Box from '@mui/material/Box';
 import Breadcrumbs, { breadcrumbsClasses } from '@mui/material/Breadcrumbs';
 import Container, { ContainerProps } from '@mui/material/Container';
 import MuiLink from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
-import Link from 'next/link';
 
 const PageContentHeader = styled('div')(({ theme }) => ({
   display: 'flex',

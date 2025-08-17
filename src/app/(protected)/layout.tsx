@@ -1,17 +1,18 @@
 'use client';
 
 import * as React from 'react';
+
 import CssBaseline from '@mui/material/CssBaseline';
 
-import AppTheme from '@/styles/shared/AppTheme';
+import DialogsProvider from '@/hooks/dashboard/useDialogs/DialogsProvider';
+import NotificationsProvider from '@/hooks/dashboard/useNotifications/NotificationsProvider';
 import {
   dataGridCustomizations,
   datePickersCustomizations,
   formInputCustomizations,
   sidebarCustomizations,
 } from '@/styles/dashboard/customizations';
-import NotificationsProvider from '@/hooks/dashboard/useNotifications/NotificationsProvider';
-import DialogsProvider from '@/hooks/dashboard/useDialogs/DialogsProvider';
+import AppTheme from '@/styles/shared/AppTheme';
 
 const themeComponents = {
   ...dataGridCustomizations,

@@ -1,9 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import Divider from '@mui/material/Divider';
 
+import Divider from '@mui/material/Divider';
 import type {} from '@mui/material/themeCssVarsAugmentation';
+
 import DashboardSidebarContext from '@/context/dashboard/DashboardSidebarContext';
 import { getDrawerSxTransitionMixin } from '@/lib/dashboard/mixins';
 

@@ -3,16 +3,15 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 
-import useNotifications from '@/hooks/dashboard/useNotifications/useNotifications';
+import PageContainer from '../PageContainer';
+import UserForm, { type FormFieldValue, type UserFormState } from './UserForm';
+
 import {
   createOne as createUser,
-  validate as validateUser,
   type User,
+  validate as validateUser,
 } from '@/data/dashboard/users';
-
-import PageContainer from '../PageContainer';
-
-import UserForm, { type FormFieldValue, type UserFormState } from './UserForm';
+import useNotifications from '@/hooks/dashboard/useNotifications/useNotifications';
 
 const INITIAL_FORM_VALUES: Partial<UserFormState['values']> = {
   role: 'Market',

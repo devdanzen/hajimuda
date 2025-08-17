@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+
 import type { ThemeOptions } from '@mui/material/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 

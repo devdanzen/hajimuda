@@ -1,8 +1,9 @@
-import 'dotenv/config';
 import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/vercel-postgres';
 
 import { users } from './db/schema/users';
+
+import 'dotenv/config';
 
 async function main() {
   const db = drizzle();

@@ -2,10 +2,10 @@
 
 import { Box, Button, Container, Typography } from '@mui/material';
 
+import PackageCard from './PackageCard';
+
 import { Color } from '@/styles/color';
 import { sectionSubtitleSx } from '@/styles/typography';
-
-import PackageCard from './PackageCard';
 
 export const packagesData = [
   {

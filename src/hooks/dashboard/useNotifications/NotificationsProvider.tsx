@@ -1,13 +1,14 @@
 import * as React from 'react';
+
+import CloseIcon from '@mui/icons-material/Close';
 import Alert from '@mui/material/Alert';
 import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import type { SnackbarCloseReason } from '@mui/material/Snackbar';
 import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';
-import type { SnackbarCloseReason } from '@mui/material/Snackbar';
 import type { CloseReason } from '@mui/material/SpeedDial';
-import CloseIcon from '@mui/icons-material/Close';
 import useSlotProps from '@mui/utils/useSlotProps';
 
 import NotificationsContext from './NotificationsContext';

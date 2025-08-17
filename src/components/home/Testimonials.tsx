@@ -1,14 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
+
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 import { Color } from '@/styles/color';
 import { sectionSubtitleSx } from '@/styles/typography';

@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
 export default function HajiMudaIcon(props: SvgIconProps) {

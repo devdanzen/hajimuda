@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -313,21 +314,21 @@ export function useDialogs(): DialogHook {
 
   const alert = useEventCallback<OpenAlertDialog>(
      
-    // @ts-ignore
+    // @ts-nocheck
     (msg, { onClose, ...options } = {}) =>
       open(AlertDialog, { ...options, msg }, { onClose }),
   );
 
   const confirm = useEventCallback<OpenConfirmDialog>(
      
-    // @ts-ignore
+    // @ts-nocheck
     (msg, { onClose, ...options } = {}) =>
       open(ConfirmDialog, { ...options, msg }, { onClose }),
   );
 
   const prompt = useEventCallback<OpenPromptDialog>(
      
-    // @ts-ignore
+    // @ts-nocheck
     (msg, { onClose, ...options } = {}) =>
       open(PromptDialog, { ...options, msg }, { onClose }),
   );

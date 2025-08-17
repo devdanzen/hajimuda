@@ -1,9 +1,10 @@
 'use client';
 
 import * as React from 'react';
+
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 const logos = ['/assets/images/multazam_logo.webp', '/assets/images/tursina_logo.png', '/assets/images/almira_logo.png'];
 

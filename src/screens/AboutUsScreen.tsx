@@ -1,28 +1,29 @@
 'use client';
 
 import * as React from 'react';
+
 import {
-  Box,
-  Container,
-  Typography,
-  Grid,
-  Card,
-  Avatar,
-  Stack,
-  Divider,
-  Button,
-} from '@mui/material';
-import {
-  Phone,
-  Email,
-  LocationOn,
-  WhatsApp,
   AccessTime,
-  Person,
-  Star,
+  Email,
   Group,
+  LocationOn,
+  Person,
+  Phone,
+  Star,
   Timeline,
+  WhatsApp,
 } from '@mui/icons-material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  Container,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 import { Color } from '@/styles/color';
 import { sectionSubtitleSx } from '@/styles/typography';

@@ -1,5 +1,6 @@
-import DashboardScreen from '@/screens/dashboard/DashboardScreen';
 import UserCreate from '@/components/dashboard/user/UserCreate';
+
+import DashboardScreen from '@/screens/dashboard/DashboardScreen';
 
 const UserCreatePage = () => {
   return (

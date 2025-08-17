@@ -1,5 +1,6 @@
-import DashboardScreen from '@/screens/dashboard/DashboardScreen';
 import UserList from '@/components/dashboard/user/UserList';
+
+import DashboardScreen from '@/screens/dashboard/DashboardScreen';
 
 const UsersPage = () => {
   return (

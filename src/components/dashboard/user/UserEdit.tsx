@@ -1,22 +1,22 @@
 'use client';
 
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
+
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useRouter } from 'next/navigation';
 
-import useNotifications from '@/hooks/dashboard/useNotifications/useNotifications';
+import PageContainer from '../PageContainer';
+import UserForm, { type FormFieldValue, type UserFormState } from './UserForm';
+
 import {
   getOne as getUser,
   updateOne as updateUser,
-  validate as validateUser,
   type User,
+  validate as validateUser,
 } from '@/data/dashboard/users';
-
-import PageContainer from '../PageContainer';
-
-import UserForm, { type FormFieldValue, type UserFormState } from './UserForm';
+import useNotifications from '@/hooks/dashboard/useNotifications/useNotifications';
 
 function UserEditForm({
   initialValues,

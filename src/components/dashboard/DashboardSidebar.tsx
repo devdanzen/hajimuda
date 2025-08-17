@@ -1,26 +1,27 @@
 'use client';
 
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import Toolbar from '@mui/material/Toolbar';
-import type {} from '@mui/material/themeCssVarsAugmentation';
-import PersonIcon from '@mui/icons-material/Person';
+import { usePathname } from 'next/navigation';
+
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
 import LayersIcon from '@mui/icons-material/Layers';
-import { usePathname } from 'next/navigation';
+import PersonIcon from '@mui/icons-material/Person';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import { useTheme } from '@mui/material/styles';
+import type {} from '@mui/material/themeCssVarsAugmentation';
+import Toolbar from '@mui/material/Toolbar';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
+import DashboardSidebarDividerItem from './DashboardSidebarDividerItem';
+import DashboardSidebarHeaderItem from './DashboardSidebarHeaderItem';
+import DashboardSidebarPageItem from './DashboardSidebarPageItem';
 
 import DashboardSidebarContext from '@/context/dashboard/DashboardSidebarContext';
 import { DRAWER_WIDTH, MINI_DRAWER_WIDTH } from '@/lib/dashboard/constants';
 import { getDrawerSxTransitionMixin, getDrawerWidthTransitionMixin } from '@/lib/dashboard/mixins';
-
-import DashboardSidebarPageItem from './DashboardSidebarPageItem';
-import DashboardSidebarHeaderItem from './DashboardSidebarHeaderItem';
-import DashboardSidebarDividerItem from './DashboardSidebarDividerItem';
 
 export interface DashboardSidebarProps {
   expanded?: boolean;

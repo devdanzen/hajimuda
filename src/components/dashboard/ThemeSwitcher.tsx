@@ -1,12 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { useTheme, useColorScheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import IconButton from '@mui/material/IconButton';
+import { useColorScheme,useTheme } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function ThemeSwitcher() {
   const theme = useTheme();

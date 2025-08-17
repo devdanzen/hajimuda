@@ -1,10 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+
 import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import DashboardHeader from './DashboardHeader';
 import DashboardSidebar from './DashboardSidebar';

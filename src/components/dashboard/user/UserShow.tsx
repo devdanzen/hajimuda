@@ -1,6 +1,11 @@
 'use client';
 
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
+
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,17 +15,13 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
 
+import PageContainer from '../PageContainer';
+
+import { deleteOne as deleteUser, getOne as getUser, type User } from '@/data/dashboard/users';
 import { useDialogs } from '@/hooks/dashboard/useDialogs/useDialogs';
 import useNotifications from '@/hooks/dashboard/useNotifications/useNotifications';
-import { deleteOne as deleteUser, getOne as getUser, type User } from '@/data/dashboard/users';
-
-import PageContainer from '../PageContainer';
 
 export default function UserShow({ userId }: { userId: number }) {
   const router = useRouter();

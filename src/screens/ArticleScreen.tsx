@@ -2,8 +2,8 @@
 
 import Container from '@mui/material/Container';
 
-import MainContent from '@/components/article/MainContent';
 import Latest from '@/components/article/Latest';
+import MainContent from '@/components/article/MainContent';
 
 export default function ArticleScreen() {
   return (

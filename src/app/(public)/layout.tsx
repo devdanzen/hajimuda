@@ -1,10 +1,12 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import { Divider } from '@mui/material';
 
-import Navbar from '@/components/shared/Navbar';
-import AppTheme from '@/styles/shared/AppTheme';
+import { Divider } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+
 import Footer from '@/components/home/Footer';
+import Navbar from '@/components/shared/Navbar';
+
+import AppTheme from '@/styles/shared/AppTheme';
 
 interface PublicLayoutProps {
   children: React.ReactNode;

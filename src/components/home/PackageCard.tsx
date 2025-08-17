@@ -1,17 +1,18 @@
+import Image from 'next/image';
+
+import { AirlineSeatReclineNormal,CalendarToday, Flight, Hotel, LocationPin } from '@mui/icons-material';
 import {
+  Box,
   Card,
   CardContent,
   CardMedia,
-  Typography,
   Chip,
-  Box,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from '@mui/material';
-import { Flight, Hotel, CalendarToday, LocationPin, AirlineSeatReclineNormal } from '@mui/icons-material';
-import Image from 'next/image';
 
 import { Color } from '@/styles/color';
 
