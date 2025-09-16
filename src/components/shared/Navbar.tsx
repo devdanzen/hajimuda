@@ -2,12 +2,14 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import PersonIcon from '@mui/icons-material/Person';
 import { Tooltip } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -19,16 +21,25 @@ import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
 import HajiMudaIcon from '../home/HajiMudaIcon';
 
+import { useAuth } from '@/context/AuthContext';
 import { Color } from '@/styles/color';
 
-const MENU = [
+interface MenuItem {
+  path: string;
+  label: string;
+  link: string;
+  isExternal?: boolean;
+  isDisabled?: boolean;
+}
+
+const MENU: MenuItem[] = [
   { path: '/', label: 'Beranda', link: '/' },
   { path: '/tentang-kami', label: 'Tentang Kami', link: '/tentang-kami' },
-  { path: '/paket', label: 'Paket', link: '', isDisabled: true },
-  { path: '/artikel', label: 'Artikel', link: '', isDisabled: true },
+  { path: '/artikel', label: 'Artikel', link: '/artikel' },
   {
     path: 'https://wa.me/6281239019313',
     label: 'Kontak Kami',
@@ -92,9 +103,19 @@ const HelpButton = styled(IconButton)(() => ({
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, logout } = useAuth();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
+  };
+
+  const handleLogin = () => {
+    router.push('/login');
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -154,20 +175,65 @@ export default function Navbar() {
             )}
           </Box>
 
-          <Tooltip title="Coming Soon" arrow>
-            <Box
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                gap: 1.5,
-                alignItems: 'center',
-              }}
-            >
+          <Box
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              gap: 1.5,
+              alignItems: 'center',
+            }}
+          >
+            <Tooltip title="Coming Soon" arrow>
               <HelpButton>
                 <HelpOutlineIcon sx={{ fontSize: 20 }} />
               </HelpButton>
-              <CTAButton variant="contained">Login</CTAButton>
-            </Box>
-          </Tooltip>
+            </Tooltip>
+            {user ? (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mr: 1 }}>
+                  <PersonIcon sx={{ fontSize: 20, color: Color.ThemeGray }} />
+                  <Typography variant="body2" sx={{ color: Color.ThemeGray }}>
+                    {user.email}
+                  </Typography>
+                </Box>
+                {user.role === 'admin' && (
+                  <Link href="/dashboard" style={{ textDecoration: 'none', marginRight: 8 }}>
+                    <CTAButton
+                      variant="outlined"
+                      sx={{
+                        color: Color.ThemeGold,
+                        borderColor: Color.ThemeGold,
+                        '&:hover': {
+                          borderColor: Color.ThemeGoldDark,
+                          backgroundColor: `${Color.ThemeGold}10`,
+                        },
+                      }}
+                    >
+                      Dashboard
+                    </CTAButton>
+                  </Link>
+                )}
+                <CTAButton
+                  variant="outlined"
+                  startIcon={<LogoutIcon />}
+                  onClick={handleLogout}
+                  sx={{
+                    color: Color.ThemeGold,
+                    borderColor: Color.ThemeGold,
+                    '&:hover': {
+                      borderColor: Color.ThemeGoldDark,
+                      backgroundColor: `${Color.ThemeGold}10`,
+                    },
+                  }}
+                >
+                  Logout
+                </CTAButton>
+              </Box>
+            ) : (
+              <CTAButton variant="contained" onClick={handleLogin}>
+                Login
+              </CTAButton>
+            )}
+          </Box>
 
           <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
             <IconButton
@@ -241,11 +307,51 @@ export default function Navbar() {
                   )
                 )}
                 <Divider sx={{ my: 3, borderColor: `${Color.ThemeGoldLight}30` }} />
-                <MenuItem sx={{ p: 0, mb: 2 }}>
-                  <CTAButton variant="contained" fullWidth>
-                    Login
-                  </CTAButton>
-                </MenuItem>
+                {user ? (
+                  <>
+                    <Box sx={{ px: 2, py: 1, mb: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <PersonIcon sx={{ fontSize: 20, color: Color.ThemeGray }} />
+                        <Typography variant="body2" sx={{ color: Color.ThemeGray }}>
+                          {user.email}
+                        </Typography>
+                      </Box>
+                    </Box>
+                    {user.role === 'admin' && (
+                      <MenuItem sx={{ p: 0, mb: 2 }}>
+                        <Link href="/dashboard" style={{ textDecoration: 'none', width: '100%' }}>
+                          <CTAButton variant="contained" fullWidth>
+                            Dashboard
+                          </CTAButton>
+                        </Link>
+                      </MenuItem>
+                    )}
+                    <MenuItem sx={{ p: 0, mb: 2 }}>
+                      <CTAButton
+                        variant="outlined"
+                        fullWidth
+                        startIcon={<LogoutIcon />}
+                        onClick={handleLogout}
+                        sx={{
+                          color: Color.ThemeGold,
+                          borderColor: Color.ThemeGold,
+                          '&:hover': {
+                            borderColor: Color.ThemeGoldDark,
+                            backgroundColor: `${Color.ThemeGold}10`,
+                          },
+                        }}
+                      >
+                        Logout
+                      </CTAButton>
+                    </MenuItem>
+                  </>
+                ) : (
+                  <MenuItem sx={{ p: 0, mb: 2 }}>
+                    <CTAButton variant="contained" fullWidth onClick={handleLogin}>
+                      Login
+                    </CTAButton>
+                  </MenuItem>
+                )}
               </Box>
             </Drawer>
           </Box>

@@ -10,14 +10,11 @@ import AppTheme from '@/styles/shared/AppTheme';
 
 interface PublicLayoutProps {
   children: React.ReactNode;
-  props: {
-    disableCustomTheme?: boolean;
-  };
 }
 
-export default function PublicLayout({ children, props }: PublicLayoutProps) {
+export default function PublicLayout({ children }: PublicLayoutProps) {
   return (
-    <AppTheme {...props}>
+    <AppTheme>
       <CssBaseline enableColorScheme />
 
       <Navbar />
