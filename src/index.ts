@@ -12,6 +12,7 @@ async function main() {
     name: 'Danish',
     age: 21,
     email: 'daniz.rafidz@gmail.com',
+    password: 'hashed_password_here',
   };
 
   await db.insert(users).values(user);

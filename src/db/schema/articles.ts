@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { integer, pgEnum, pgTable, text, varchar } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgEnum, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 import { users } from './users';
 
@@ -8,9 +8,15 @@ export const categoriesEnum = pgEnum('categories', ['teknologi', 'berita', 'eduk
 export const articles = pgTable('articles', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar({ length: 255 }).notNull(),
+  slug: varchar({ length: 255 }).notNull().unique(),
   content: text('content'),
+  excerpt: text('excerpt'),
+  image: text('image'),
   authorId: integer('author_id'),
   category: categoriesEnum().notNull(),
+  published: boolean().notNull().default(true),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
 export const articlesRelations = relations(articles, ({ one }) => ({

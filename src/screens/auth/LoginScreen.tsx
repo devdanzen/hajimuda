@@ -1,22 +1,26 @@
 'use client';
 
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
 
+import HomeIcon from '@mui/icons-material/Home';
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
 import Checkbox from '@mui/material/Checkbox';
+import CircularProgress from '@mui/material/CircularProgress';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import ForgotPassword from '@/components/auth/ForgotPassword';
 import HajiMudaIcon from '@/components/home/HajiMudaIcon';
+
+import { useAuth } from '@/context/AuthContext';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -52,45 +56,56 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function LoginScreen() {
-  const [usernameError, setUsernameError] = React.useState(false);
-  const [usernameErrorMessage, setUsernameErrorMessage] = React.useState('');
+  const router = useRouter();
+  const [emailError, setEmailError] = React.useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [loginError, setLoginError] = React.useState('');
+  const { login } = useAuth();
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleBackToSite = () => {
+    router.push('/');
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (usernameError || passwordError) {
-      event.preventDefault();
+    if (!validateInputs()) {
       return;
     }
+
+    setIsLoading(true);
+    setLoginError('');
+
     const data = new FormData(event.currentTarget);
-    console.info({
-      username: data.get('username'),
-      password: data.get('password'),
-    });
+    const email = data.get('email') as string;
+    const password = data.get('password') as string;
+
+    const result = await login(email, password);
+
+    if (!result.success) {
+      setLoginError(result.error || 'Login failed');
+    }
+
+    setIsLoading(false);
   };
 
   const validateInputs = () => {
-    const username = document.getElementById('username') as HTMLInputElement;
+    const email = document.getElementById('email') as HTMLInputElement;
     const password = document.getElementById('password') as HTMLInputElement;
 
     let isValid = true;
 
-    if (!username.value || username.value.length < 6) {
-      setUsernameError(true);
-      setUsernameErrorMessage('Please enter a valid username.');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.value || !emailRegex.test(email.value)) {
+      setEmailError(true);
+      setEmailErrorMessage('Please enter a valid email address.');
       isValid = false;
     } else {
-      setUsernameError(false);
-      setUsernameErrorMessage('');
+      setEmailError(false);
+      setEmailErrorMessage('');
     }
 
     if (!password.value || password.value.length < 6) {
@@ -117,6 +132,11 @@ export default function LoginScreen() {
           >
             Login Admin
           </Typography>
+          {loginError && (
+            <Alert severity="error" sx={{ width: '100%' }}>
+              {loginError}
+            </Alert>
+          )}
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -129,20 +149,20 @@ export default function LoginScreen() {
             }}
           >
             <FormControl>
-              <FormLabel htmlFor="username">Username</FormLabel>
+              <FormLabel htmlFor="email">Email</FormLabel>
               <TextField
-                error={usernameError}
-                helperText={usernameErrorMessage}
-                id="username"
-                type="text"
-                name="username"
-                placeholder="username"
-                autoComplete="username"
+                error={emailError}
+                helperText={emailErrorMessage}
+                id="email"
+                type="email"
+                name="email"
+                placeholder="admin@hajimuda.com"
+                autoComplete="email"
                 autoFocus
                 required
                 fullWidth
                 variant="outlined"
-                color={usernameError ? 'error' : 'primary'}
+                color={emailError ? 'error' : 'primary'}
               />
             </FormControl>
             <FormControl>
@@ -166,19 +186,25 @@ export default function LoginScreen() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <ForgotPassword open={open} handleClose={handleClose} />
-            <Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
-              Login
-            </Button>
-            <Link
-              component="button"
-              type="button"
-              onClick={handleClickOpen}
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={isLoading}
+              sx={{ mt: 2 }}
             >
-              Forgot your password?
-            </Link>
+              {isLoading ? <CircularProgress size={24} /> : 'Login'}
+            </Button>
+            <Button
+              type="button"
+              fullWidth
+              variant="outlined"
+              startIcon={<HomeIcon />}
+              onClick={handleBackToSite}
+              sx={{ mt: 1 }}
+            >
+              Back to Site
+            </Button>
           </Box>
         </Card>
       </SignInContainer>

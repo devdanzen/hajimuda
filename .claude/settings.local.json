@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/C:\\Files\\Work\\HajiMuda\\hajimuda/**)",
+      "Bash(npx drizzle-kit:*)",
+      "Bash(pnpm build:*)",
+      "Bash(powershell:*)",
+      "Bash(pnpm run lint:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

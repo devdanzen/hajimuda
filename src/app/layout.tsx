@@ -3,6 +3,8 @@ import { Cinzel_Decorative, Roboto_Slab } from 'next/font/google';
 
 import './globals.css';
 
+import { AuthProvider } from '@/context/AuthContext';
+
 const robotoSlab = Roboto_Slab({
   subsets: ['latin'],
   variable: '--font-family',
@@ -37,7 +39,9 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className={`${robotoSlab.className} ${cinzelDecorative.variable}`}>
-        <main>{children}</main>
+        <AuthProvider>
+          <main>{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );
