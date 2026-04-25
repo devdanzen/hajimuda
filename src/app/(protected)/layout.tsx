@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import ArticleIcon from '@mui/icons-material/Article';
+import CategoryIcon from '@mui/icons-material/Category';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HomeIcon from '@mui/icons-material/Home';
@@ -48,9 +49,10 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { text: 'Overview', icon: <DashboardIcon />, path: '/dashboard' },
+  { text: 'Ringkasan', icon: <DashboardIcon />, path: '/dashboard' },
   { text: 'Artikel', icon: <ArticleIcon />, path: '/dashboard/artikel' },
-  { text: 'Users', icon: <PeopleIcon />, path: '/dashboard/users' },
+  { text: 'Kategori', icon: <CategoryIcon />, path: '/dashboard/kategori' },
+  { text: 'Pengguna', icon: <PeopleIcon />, path: '/dashboard/users' },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -147,7 +149,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               >
                 <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary="View Site" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="Lihat Situs" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
         </ListItem>
@@ -169,7 +171,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             >
               <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary="Logout" sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primary="Keluar" sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -211,7 +213,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-              Dashboard
+              Dasbor
             </Typography>
             <Button
               component={Link}
@@ -230,7 +232,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 },
               }}
             >
-              View Site
+              Lihat Situs
             </Button>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               {user.email}

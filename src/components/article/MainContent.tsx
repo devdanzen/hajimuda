@@ -31,8 +31,16 @@ interface Article {
   excerpt: string;
   image: string;
   category: string;
+  categoryName?: string | null;
+  categoryColor?: string | null;
+  categoryTextColor?: string | null;
   createdAt: string;
   authorName: string;
+}
+
+interface CategoryOption {
+  value: string;
+  label: string;
 }
 
 const SyledCard = styled(Card)(({ theme }) => ({
@@ -119,15 +127,11 @@ export function Search({ value, onChange }: { value: string; onChange: (value: s
   );
 }
 
-const categories = [
-  { value: 'all', label: 'Semua Kategori' },
-  { value: 'edukasi', label: 'Edukasi' },
-  { value: 'berita', label: 'Berita' },
-  { value: 'teknologi', label: 'Teknologi' },
-];
+const ALL_CATEGORY: CategoryOption = { value: 'all', label: 'Semua Kategori' };
 
 export default function MainContent() {
   const [articles, setArticles] = React.useState<Article[]>([]);
+  const [categories, setCategories] = React.useState<CategoryOption[]>([ALL_CATEGORY]);
   const [loading, setLoading] = React.useState(true);
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedCategory, setSelectedCategory] = React.useState('all');
@@ -166,6 +170,23 @@ export default function MainContent() {
   React.useEffect(() => {
     fetchArticles();
   }, [fetchArticles]);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    fetch('/api/categories')
+      .then(r => (r.ok ? r.json() : { categories: [] }))
+      .then(data => {
+        if (cancelled) return;
+        const opts: CategoryOption[] = (data.categories || []).map(
+          (c: { slug: string; name: string }) => ({ value: c.slug, label: c.name })
+        );
+        setCategories([ALL_CATEGORY, ...opts]);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleFocus = (index: number) => {
     setFocusedCardIndex(index);
@@ -323,11 +344,11 @@ export default function MainContent() {
                     )}
                     <SyledCardContent>
                       <Chip
-                        label={article.category}
+                        label={article.categoryName || article.category}
                         size="small"
                         sx={{
-                          backgroundColor: getCategoryColor(article.category),
-                          color: getCategoryTextColor(article.category),
+                          backgroundColor: getCategoryColor(article.category, article.categoryColor),
+                          color: getCategoryTextColor(article.category, article.categoryTextColor),
                           fontWeight: 500
                         }}
                       />

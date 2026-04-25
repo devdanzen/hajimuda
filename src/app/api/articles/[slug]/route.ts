@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { and,eq } from 'drizzle-orm';
 
 import { articles } from '@/db/schema/articles';
+import { categories } from '@/db/schema/categories';
 import { users } from '@/db/schema/users';
 import { db } from '@/lib/db';
 
@@ -21,7 +22,10 @@ export async function GET(
         content: articles.content,
         excerpt: articles.excerpt,
         image: articles.image,
-        category: articles.category,
+        category: categories.slug,
+        categoryName: categories.name,
+        categoryColor: categories.color,
+        categoryTextColor: categories.textColor,
         createdAt: articles.createdAt,
         updatedAt: articles.updatedAt,
         authorName: users.name,
@@ -29,6 +33,7 @@ export async function GET(
       })
       .from(articles)
       .leftJoin(users, eq(articles.authorId, users.id))
+      .leftJoin(categories, eq(articles.categoryId, categories.id))
       .where(
         and(
           eq(articles.slug, slug),

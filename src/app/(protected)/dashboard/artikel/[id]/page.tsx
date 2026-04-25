@@ -33,14 +33,22 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
   const [loading, setLoading] = React.useState(true);
   const [saving, setSaving] = React.useState(false);
   const [error, setError] = React.useState('');
+  const [categories, setCategories] = React.useState<{ id: number; name: string; slug: string }[]>([]);
   const [formData, setFormData] = React.useState({
     title: '',
     slug: '',
-    category: 'teknologi' as 'teknologi' | 'berita' | 'edukasi',
+    category: '',
     image: '',
     content: '',
     published: true,
   });
+
+  React.useEffect(() => {
+    fetch('/api/categories')
+      .then(r => (r.ok ? r.json() : { categories: [] }))
+      .then(data => setCategories(data.categories || []))
+      .catch(() => {});
+  }, []);
 
   const fetchArticle = React.useCallback(async () => {
     try {
@@ -55,16 +63,16 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
         setFormData({
           title: data.article.title || '',
           slug: data.article.slug || '',
-          category: data.article.category || 'teknologi',
+          category: data.article.category || '',
           image: data.article.image || '',
           content: data.article.content || '',
           published: data.article.published ?? true,
         });
       } else {
-        setError('Failed to load article');
+        setError('Gagal memuat artikel');
       }
     } catch (_err) {
-      setError('An error occurred while loading the article');
+      setError('Terjadi kesalahan saat memuat artikel');
     } finally {
       setLoading(false);
     }
@@ -94,10 +102,10 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
       if (response.ok) {
         router.push('/dashboard/artikel');
       } else {
-        setError(data.error || 'Failed to update article');
+        setError(data.error || 'Gagal memperbarui artikel');
       }
     } catch (_err) {
-      setError('An error occurred while updating the article');
+      setError('Terjadi kesalahan saat memperbarui artikel');
     } finally {
       setSaving(false);
     }
@@ -127,10 +135,10 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
           onClick={() => router.back()}
           variant="outlined"
         >
-          Back
+          Kembali
         </Button>
         <Typography variant="h4" sx={{ fontWeight: 600 }}>
-          Edit Article
+          Edit Artikel
         </Typography>
       </Box>
 
@@ -145,7 +153,7 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
           <Box component="form" onSubmit={handleSubmit}>
             <TextField
               fullWidth
-              label="Title"
+              label="Judul"
               value={formData.title}
               onChange={(e) => handleTitleChange(e.target.value)}
               required
@@ -157,36 +165,36 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
               label="Slug"
               value={formData.slug}
               onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-              helperText="URL-friendly version of the title"
+              helperText="Versi judul yang ramah URL"
               sx={{ mb: 3 }}
             />
 
             <FormControl fullWidth sx={{ mb: 3 }}>
-              <InputLabel>Category</InputLabel>
+              <InputLabel>Kategori</InputLabel>
               <Select
                 value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
-                label="Category"
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                label="Kategori"
                 required
               >
-                <MenuItem value="teknologi">Teknologi</MenuItem>
-                <MenuItem value="berita">Berita</MenuItem>
-                <MenuItem value="edukasi">Edukasi</MenuItem>
+                {categories.map(c => (
+                  <MenuItem key={c.id} value={c.slug}>{c.name}</MenuItem>
+                ))}
               </Select>
             </FormControl>
 
             <Box sx={{ mb: 3 }}>
               <TextField
                 fullWidth
-                label="Cover Image URL"
+                label="URL Gambar Sampul"
                 value={formData.image}
                 onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                helperText="Enter the URL of the cover image"
+                helperText="Masukkan URL gambar sampul"
               />
               {formData.image && (
                 <Box sx={{ mt: 2 }}>
                   <Typography variant="body2" sx={{ mb: 1, fontWeight: 500 }}>
-                    Image Preview:
+                    Pratinjau Gambar:
                   </Typography>
                   <Box
                     component="img"
@@ -211,12 +219,12 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
 
             <TextField
               fullWidth
-              label="Content"
+              label="Konten"
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               multiline
               rows={15}
-              helperText="You can use Markdown formatting"
+              helperText="Anda dapat menggunakan format Markdown"
               sx={{ mb: 3 }}
             />
 
@@ -227,7 +235,7 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
                   onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
                 />
               }
-              label="Published (uncheck to save as draft)"
+              label="Dipublikasikan (hilangkan centang untuk menyimpan sebagai draf)"
               sx={{ mb: 4 }}
             />
 
@@ -239,7 +247,7 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
                 disabled={saving}
                 size="large"
               >
-                {saving ? 'Saving...' : 'Save Changes'}
+                {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
               </Button>
               <Button
                 variant="outlined"
@@ -247,7 +255,7 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
                 disabled={saving}
                 size="large"
               >
-                Cancel
+                Batal
               </Button>
             </Box>
           </Box>

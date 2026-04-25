@@ -92,10 +92,10 @@ export default function UsersPage() {
     <Box>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" sx={{ fontWeight: 600 }}>
-          Users Management
+          Manajemen Pengguna
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          View and manage all registered users
+          Lihat dan kelola semua pengguna terdaftar
         </Typography>
       </Box>
 
@@ -103,7 +103,7 @@ export default function UsersPage() {
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="h6" sx={{ fontWeight: 500 }}>
-              Total Users: {totalCount}
+              Total Pengguna: {totalCount}
             </Typography>
           </Box>
         </Box>
@@ -119,10 +119,10 @@ export default function UsersPage() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Name</TableCell>
+                  <TableCell>Nama</TableCell>
                   <TableCell>Email</TableCell>
-                  <TableCell>Role</TableCell>
-                  <TableCell>Joined</TableCell>
+                  <TableCell>Peran</TableCell>
+                  <TableCell>Bergabung</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -137,7 +137,7 @@ export default function UsersPage() {
                     <TableCell>
                       <Chip
                         icon={getRoleIcon(user.role)}
-                        label={user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                        label={user.role === 'admin' ? 'Admin' : 'Anggota'}
                         size="small"
                         color={getRoleColor(user.role)}
                         variant={user.role === 'admin' ? 'filled' : 'outlined'}
@@ -149,7 +149,7 @@ export default function UsersPage() {
                 {users.length === 0 && !loading && (
                   <TableRow>
                     <TableCell colSpan={4} align="center" sx={{ py: 4 }}>
-                      <Typography color="text.secondary">No users found</Typography>
+                      <Typography color="text.secondary">Tidak ada pengguna</Typography>
                     </TableCell>
                   </TableRow>
                 )}

@@ -21,6 +21,9 @@ interface Article {
   slug: string;
   excerpt: string;
   category: string;
+  categoryName?: string | null;
+  categoryColor?: string | null;
+  categoryTextColor?: string | null;
   createdAt: string;
   authorName: string;
 }
@@ -186,11 +189,11 @@ export default function Latest() {
                   }}
                 >
                   <Chip
-                    label={article.category}
+                    label={article.categoryName || article.category}
                     size="small"
                     sx={{
-                      backgroundColor: getCategoryColor(article.category),
-                      color: getCategoryTextColor(article.category),
+                      backgroundColor: getCategoryColor(article.category, article.categoryColor),
+                      color: getCategoryTextColor(article.category, article.categoryTextColor),
                       fontWeight: 500
                     }}
                   />

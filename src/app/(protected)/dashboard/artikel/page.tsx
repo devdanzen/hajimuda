@@ -41,17 +41,28 @@ interface Article {
   id: number;
   title: string;
   slug: string;
-  category: 'teknologi' | 'berita' | 'edukasi';
+  category: string;
+  categoryName?: string | null;
+  categoryColor?: string | null;
+  categoryTextColor?: string | null;
+  image?: string | null;
   published: boolean;
   createdAt: string;
   updatedAt: string;
   authorName?: string;
 }
 
+interface CategoryOption {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 export default function ArticleManagementPage() {
   const router = useRouter();
   const { token } = useAuth();
   const [articles, setArticles] = React.useState<Article[]>([]);
+  const [categories, setCategories] = React.useState<CategoryOption[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -142,6 +153,19 @@ export default function ArticleManagementPage() {
     fetchArticles();
   }, [fetchArticles]);
 
+  React.useEffect(() => {
+    let cancelled = false;
+    fetch('/api/categories')
+      .then(r => (r.ok ? r.json() : { categories: [] }))
+      .then(data => {
+        if (!cancelled) setCategories(data.categories || []);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -185,14 +209,14 @@ export default function ArticleManagementPage() {
     <Box>
       <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h4" sx={{ fontWeight: 600 }}>
-          Article Management
+          Manajemen Artikel
         </Typography>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => router.push('/dashboard/artikel/new')}
         >
-          Create New Article
+          Buat Artikel Baru
         </Button>
       </Box>
 
@@ -201,7 +225,7 @@ export default function ArticleManagementPage() {
           <FormControl sx={{ minWidth: 300 }}>
             <OutlinedInput
               size="small"
-              placeholder="Search articles..."
+              placeholder="Cari artikel..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               startAdornment={
@@ -212,16 +236,16 @@ export default function ArticleManagementPage() {
             />
           </FormControl>
           <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel>Category</InputLabel>
+            <InputLabel>Kategori</InputLabel>
             <Select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              label="Category"
+              label="Kategori"
             >
-              <MenuItem value="all">All Categories</MenuItem>
-              <MenuItem value="teknologi">Teknologi</MenuItem>
-              <MenuItem value="berita">Berita</MenuItem>
-              <MenuItem value="edukasi">Edukasi</MenuItem>
+              <MenuItem value="all">Semua Kategori</MenuItem>
+              {categories.map(c => (
+                <MenuItem key={c.id} value={c.slug}>{c.name}</MenuItem>
+              ))}
             </Select>
           </FormControl>
           <FormControl size="small" sx={{ minWidth: 150 }}>
@@ -231,9 +255,9 @@ export default function ArticleManagementPage() {
               onChange={(e) => setStatusFilter(e.target.value)}
               label="Status"
             >
-              <MenuItem value="all">All Status</MenuItem>
-              <MenuItem value="true">Published</MenuItem>
-              <MenuItem value="false">Draft</MenuItem>
+              <MenuItem value="all">Semua Status</MenuItem>
+              <MenuItem value="true">Dipublikasikan</MenuItem>
+              <MenuItem value="false">Draf</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -243,46 +267,90 @@ export default function ArticleManagementPage() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Category</TableCell>
+              <TableCell>Judul</TableCell>
+              <TableCell>Kategori</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Author</TableCell>
-              <TableCell>Created</TableCell>
-              <TableCell>Updated</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell>Penulis</TableCell>
+              <TableCell>Dibuat</TableCell>
+              <TableCell>Diperbarui</TableCell>
+              <TableCell align="right">Aksi</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {articles.map((article) => (
               <TableRow key={article.id} hover>
                 <TableCell>
-                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                    {article.title}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    /{article.slug}
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    {article.image ? (
+                      <Box
+                        component="img"
+                        src={article.image}
+                        alt={article.title}
+                        sx={{
+                          width: 64,
+                          height: 40,
+                          objectFit: 'cover',
+                          borderRadius: 1,
+                          border: '1px solid',
+                          borderColor: 'divider',
+                          flexShrink: 0,
+                        }}
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.visibility = 'hidden';
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        sx={{
+                          width: 64,
+                          height: 40,
+                          borderRadius: 1,
+                          border: '1px dashed',
+                          borderColor: 'divider',
+                          backgroundColor: 'action.hover',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>
+                          Tanpa
+                          <br />
+                          gambar
+                        </Typography>
+                      </Box>
+                    )}
+                    <Box sx={{ minWidth: 0 }}>
+                      <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                        {article.title}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        /{article.slug}
+                      </Typography>
+                    </Box>
+                  </Box>
                 </TableCell>
                 <TableCell>
                   <Chip
-                    label={article.category}
+                    label={article.categoryName || article.category}
                     size="small"
                     sx={{
-                      backgroundColor: getCategoryColor(article.category),
-                      color: getCategoryTextColor(article.category),
+                      backgroundColor: getCategoryColor(article.category, article.categoryColor),
+                      color: getCategoryTextColor(article.category, article.categoryTextColor),
                       fontWeight: 500
                     }}
                   />
                 </TableCell>
                 <TableCell>
                   <Chip
-                    label={article.published ? 'Published' : 'Draft'}
+                    label={article.published ? 'Dipublikasikan' : 'Draf'}
                     size="small"
                     color={article.published ? 'success' : 'default'}
                     variant={article.published ? 'filled' : 'outlined'}
                   />
                 </TableCell>
-                <TableCell>{article.authorName || 'Unknown'}</TableCell>
+                <TableCell>{article.authorName || 'Tidak diketahui'}</TableCell>
                 <TableCell>{formatDate(article.createdAt)}</TableCell>
                 <TableCell>{formatDate(article.updatedAt)}</TableCell>
                 <TableCell align="right">
@@ -306,7 +374,7 @@ export default function ArticleManagementPage() {
             {articles.length === 0 && !loading && (
               <TableRow>
                 <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
-                  <Typography color="text.secondary">No articles found</Typography>
+                  <Typography color="text.secondary">Tidak ada artikel</Typography>
                 </TableCell>
               </TableRow>
             )}
@@ -323,16 +391,16 @@ export default function ArticleManagementPage() {
       </TableContainer>
 
       <Dialog open={deleteDialog.open} onClose={() => setDeleteDialog({ open: false, article: null })}>
-        <DialogTitle>Delete Article</DialogTitle>
+        <DialogTitle>Hapus Artikel</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete &quot;{deleteDialog.article?.title}&quot;? This action cannot be undone.
+            Apakah Anda yakin ingin menghapus &quot;{deleteDialog.article?.title}&quot;? Tindakan ini tidak dapat dibatalkan.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteDialog({ open: false, article: null })}>Cancel</Button>
+          <Button onClick={() => setDeleteDialog({ open: false, article: null })}>Batal</Button>
           <Button onClick={confirmDelete} color="error" variant="contained">
-            Delete
+            Hapus
           </Button>
         </DialogActions>
       </Dialog>

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 import { articles } from '@/db/schema/articles';
+import { categories } from '@/db/schema/categories';
 import { users } from '@/db/schema/users';
 import { verifyToken } from '@/lib/auth';
 import { db } from '@/lib/db';
@@ -46,10 +47,14 @@ export async function GET(request: NextRequest) {
         .select({
           id: articles.id,
           title: articles.title,
-          category: articles.category,
+          category: categories.slug,
+          categoryName: categories.name,
+          categoryColor: categories.color,
+          categoryTextColor: categories.textColor,
           createdAt: articles.createdAt,
         })
         .from(articles)
+        .leftJoin(categories, eq(articles.categoryId, categories.id))
         .orderBy(sql`${articles.createdAt} DESC`)
         .limit(5),
     ]);
@@ -61,11 +66,12 @@ export async function GET(request: NextRequest) {
     // Get category distribution
     const categoryStats = await db
       .select({
-        category: articles.category,
+        category: categories.slug,
         count: sql<number>`count(*)`,
       })
       .from(articles)
-      .groupBy(articles.category);
+      .leftJoin(categories, eq(articles.categoryId, categories.id))
+      .groupBy(categories.slug);
 
     return NextResponse.json({
       stats: {

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { and, desc, eq, ilike, or,sql } from 'drizzle-orm';
+import { and, desc, eq, ilike, or, sql } from 'drizzle-orm';
 
 import { articles } from '@/db/schema/articles';
+import { categories } from '@/db/schema/categories';
 import { users } from '@/db/schema/users';
 import { db } from '@/lib/db';
 
@@ -16,7 +17,7 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * limit;
 
     const conditions = [
-      eq(articles.published, true) // Only show published articles
+      eq(articles.published, true)
     ];
 
     if (search) {
@@ -29,9 +30,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (category && category !== 'all') {
-      conditions.push(
-        eq(articles.category, category as 'teknologi' | 'berita' | 'edukasi')
-      );
+      conditions.push(eq(categories.slug, category));
     }
 
     const whereClause = and(...conditions);
@@ -44,12 +43,16 @@ export async function GET(request: NextRequest) {
           slug: articles.slug,
           excerpt: articles.excerpt,
           image: articles.image,
-          category: articles.category,
+          category: categories.slug,
+          categoryName: categories.name,
+          categoryColor: categories.color,
+          categoryTextColor: categories.textColor,
           createdAt: articles.createdAt,
           authorName: users.name,
         })
         .from(articles)
         .leftJoin(users, eq(articles.authorId, users.id))
+        .leftJoin(categories, eq(articles.categoryId, categories.id))
         .where(whereClause)
         .orderBy(desc(articles.createdAt))
         .limit(limit)
@@ -57,6 +60,7 @@ export async function GET(request: NextRequest) {
       db
         .select({ count: sql<number>`count(*)` })
         .from(articles)
+        .leftJoin(categories, eq(articles.categoryId, categories.id))
         .where(whereClause)
         .then(result => result[0]?.count || 0),
     ]);

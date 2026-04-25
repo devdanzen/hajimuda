@@ -30,6 +30,9 @@ interface RecentArticle {
   id: number;
   title: string;
   category: string;
+  categoryName?: string | null;
+  categoryColor?: string | null;
+  categoryTextColor?: string | null;
   createdAt: string;
 }
 
@@ -80,26 +83,26 @@ export default function DashboardPage() {
 
   const statCards = [
     {
-      title: 'Total Articles',
+      title: 'Total Artikel',
       value: stats.totalArticles,
       icon: <ArticleIcon />,
       color: '#3b82f6',
-      subtitle: `${stats.publishRate}% published`,
+      subtitle: `${stats.publishRate}% dipublikasikan`,
     },
     {
-      title: 'Published',
+      title: 'Dipublikasikan',
       value: stats.publishedArticles,
       icon: <PublishIcon />,
       color: '#10b981',
     },
     {
-      title: 'Drafts',
+      title: 'Draf',
       value: stats.draftArticles,
       icon: <DraftsIcon />,
       color: '#f59e0b',
     },
     {
-      title: 'Total Users',
+      title: 'Total Pengguna',
       value: stats.totalUsers,
       icon: <PeopleIcon />,
       color: '#8b5cf6',
@@ -117,10 +120,10 @@ export default function DashboardPage() {
   return (
     <Box>
       <Typography variant="h4" gutterBottom sx={{ fontWeight: 600, mb: 1 }}>
-        Welcome back, {user?.name || user?.email}!
+        Selamat datang kembali, {user?.name || user?.email}!
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-        Here&apos;s what&apos;s happening with your website today.
+        Berikut aktivitas terkini di situs Anda hari ini.
       </Typography>
 
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mb: 3 }}>
@@ -184,7 +187,7 @@ export default function DashboardPage() {
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-                Recent Articles
+                Artikel Terbaru
               </Typography>
               {recentArticles.length > 0 ? (
                 <Box sx={{ mt: 2 }}>
@@ -207,11 +210,11 @@ export default function DashboardPage() {
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <Chip
-                          label={article.category}
+                          label={article.categoryName || article.category}
                           size="small"
                           sx={{
-                            backgroundColor: getCategoryColor(article.category),
-                            color: getCategoryTextColor(article.category),
+                            backgroundColor: getCategoryColor(article.category, article.categoryColor),
+                            color: getCategoryTextColor(article.category, article.categoryTextColor),
                             fontWeight: 500
                           }}
                         />
@@ -229,7 +232,7 @@ export default function DashboardPage() {
                 </Box>
               ) : (
                 <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
-                  No articles yet. Create your first article!
+                  Belum ada artikel. Buat artikel pertama Anda!
                 </Typography>
               )}
             </CardContent>
@@ -246,7 +249,7 @@ export default function DashboardPage() {
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-                Category Distribution
+                Distribusi Kategori
               </Typography>
               {categoryStats.length > 0 ? (
                 <Box sx={{ mt: 2 }}>
@@ -271,14 +274,14 @@ export default function DashboardPage() {
                         }}
                       />
                       <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                        {stat.count} articles
+                        {stat.count} artikel
                       </Typography>
                     </Box>
                   ))}
                 </Box>
               ) : (
                 <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
-                  No categories yet
+                  Belum ada kategori
                 </Typography>
               )}
             </CardContent>
@@ -287,7 +290,7 @@ export default function DashboardPage() {
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-                Quick Actions
+                Aksi Cepat
               </Typography>
               <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Box
@@ -307,10 +310,10 @@ export default function DashboardPage() {
                   }}
                 >
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    Create New Article
+                    Buat Artikel Baru
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    Write and publish a new article
+                    Tulis dan publikasikan artikel baru
                   </Typography>
                 </Box>
                 <Box
@@ -330,10 +333,10 @@ export default function DashboardPage() {
                   }}
                 >
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    Manage Articles
+                    Kelola Artikel
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    Edit or delete existing articles
+                    Edit atau hapus artikel yang ada
                   </Typography>
                 </Box>
                 <Box
@@ -353,10 +356,10 @@ export default function DashboardPage() {
                   }}
                 >
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    View Users
+                    Lihat Pengguna
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    See all registered users
+                    Lihat semua pengguna terdaftar
                   </Typography>
                 </Box>
               </Box>

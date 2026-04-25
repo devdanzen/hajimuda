@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { eq } from 'drizzle-orm';
 
 import { articles } from '@/db/schema/articles';
+import { categories } from '@/db/schema/categories';
 import { generateSlug, truncateText } from '@/lib/articles';
 import { verifyToken } from '@/lib/auth';
 import { db } from '@/lib/db';
@@ -25,8 +26,22 @@ export async function GET(
     const { id: idParam } = await params;
     const id = parseInt(idParam);
     const article = await db
-      .select()
+      .select({
+        id: articles.id,
+        title: articles.title,
+        slug: articles.slug,
+        content: articles.content,
+        excerpt: articles.excerpt,
+        image: articles.image,
+        categoryId: articles.categoryId,
+        category: categories.slug,
+        published: articles.published,
+        authorId: articles.authorId,
+        createdAt: articles.createdAt,
+        updatedAt: articles.updatedAt,
+      })
       .from(articles)
+      .leftJoin(categories, eq(articles.categoryId, categories.id))
       .where(eq(articles.id, id))
       .limit(1);
 
@@ -71,6 +86,19 @@ export async function PUT(
       );
     }
 
+    const categoryRow = await db
+      .select({ id: categories.id })
+      .from(categories)
+      .where(eq(categories.slug, category))
+      .limit(1);
+
+    if (categoryRow.length === 0) {
+      return NextResponse.json(
+        { error: `Unknown category: ${category}` },
+        { status: 400 }
+      );
+    }
+
     const slug = generateSlug(title);
     const excerpt = truncateText(content || '', 200);
 
@@ -82,7 +110,7 @@ export async function PUT(
         content: content || '',
         excerpt,
         image: image || null,
-        category: category as 'teknologi' | 'berita' | 'edukasi',
+        categoryId: categoryRow[0].id,
         published: published ?? true,
         updatedAt: new Date(),
       })

@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm';
 
 import { articles } from './db/schema/articles';
+import { categories } from './db/schema/categories';
 import { users } from './db/schema/users';
 import { generateSlug, truncateText } from './lib/articles';
 import { db } from './lib/db';
@@ -343,10 +344,20 @@ async function seedArticles() {
     const authorId = adminUser[0].id;
     console.info('Found admin user with ID:', authorId);
 
+    const categoryRows = await db
+      .select({ id: categories.id, slug: categories.slug })
+      .from(categories);
+    const categoryIdBySlug = new Map(categoryRows.map(c => [c.slug, c.id]));
+
     // Insert articles
     for (const article of sampleArticles) {
       const slug = generateSlug(article.title);
       const excerpt = truncateText(article.content, 200);
+      const categoryId = categoryIdBySlug.get(article.category);
+      if (!categoryId) {
+        console.warn(`Skipping "${article.title}": unknown category "${article.category}"`);
+        continue;
+      }
 
       console.info(`Creating article: ${article.title}`);
 
@@ -356,7 +367,7 @@ async function seedArticles() {
         content: article.content,
         excerpt,
         image: article.image,
-        category: article.category,
+        categoryId,
         authorId,
         published: article.published,
       });

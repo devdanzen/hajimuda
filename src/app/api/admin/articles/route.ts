@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { and, desc, eq, ilike, or,sql } from 'drizzle-orm';
+import { and, desc, eq, ilike, or, sql } from 'drizzle-orm';
 
 import { articles } from '@/db/schema/articles';
+import { categories } from '@/db/schema/categories';
 import { users } from '@/db/schema/users';
 import { generateSlug, truncateText } from '@/lib/articles';
 import { verifyToken } from '@/lib/auth';
@@ -10,7 +11,6 @@ import { db } from '@/lib/db';
 
 export async function GET(request: NextRequest) {
   try {
-    // Verify admin token
     const token = request.headers.get('authorization')?.replace('Bearer ', '');
     if (!token) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -39,9 +39,7 @@ export async function GET(request: NextRequest) {
       );
     }
     if (category && category !== 'all') {
-      conditions.push(
-        eq(articles.category, category as 'teknologi' | 'berita' | 'edukasi')
-      );
+      conditions.push(eq(categories.slug, category));
     }
     if (published && published !== 'all') {
       conditions.push(eq(articles.published, published === 'true'));
@@ -58,7 +56,10 @@ export async function GET(request: NextRequest) {
           content: articles.content,
           excerpt: articles.excerpt,
           image: articles.image,
-          category: articles.category,
+          category: categories.slug,
+          categoryName: categories.name,
+          categoryColor: categories.color,
+          categoryTextColor: categories.textColor,
           published: articles.published,
           authorId: articles.authorId,
           authorName: users.name,
@@ -68,6 +69,7 @@ export async function GET(request: NextRequest) {
         })
         .from(articles)
         .leftJoin(users, eq(articles.authorId, users.id))
+        .leftJoin(categories, eq(articles.categoryId, categories.id))
         .where(whereClause)
         .orderBy(desc(articles.createdAt))
         .limit(limit)
@@ -75,6 +77,7 @@ export async function GET(request: NextRequest) {
       db
         .select({ count: sql<number>`count(*)` })
         .from(articles)
+        .leftJoin(categories, eq(articles.categoryId, categories.id))
         .where(whereClause)
         .then(result => result[0]?.count || 0),
     ]);
@@ -99,7 +102,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    // Verify admin token
     const token = request.headers.get('authorization')?.replace('Bearer ', '');
     if (!token) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -120,6 +122,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const categoryRow = await db
+      .select({ id: categories.id })
+      .from(categories)
+      .where(eq(categories.slug, category))
+      .limit(1);
+
+    if (categoryRow.length === 0) {
+      return NextResponse.json(
+        { error: `Unknown category: ${category}` },
+        { status: 400 }
+      );
+    }
+
     const slug = generateSlug(title);
     const excerpt = truncateText(content || '', 200);
 
@@ -131,7 +146,7 @@ export async function POST(request: NextRequest) {
         content: content || '',
         excerpt,
         image: image || null,
-        category: category as 'teknologi' | 'berita' | 'edukasi',
+        categoryId: categoryRow[0].id,
         authorId: payload.userId,
         published: isPublished ?? true,
       })

@@ -27,14 +27,26 @@ export default function CreateArticlePage() {
   const { token } = useAuth();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState('');
+  const [categories, setCategories] = React.useState<{ id: number; name: string; slug: string }[]>([]);
   const [formData, setFormData] = React.useState({
     title: '',
     slug: '',
-    category: 'teknologi' as 'teknologi' | 'berita' | 'edukasi',
+    category: '',
     image: '',
     content: '',
     published: true,
   });
+
+  React.useEffect(() => {
+    fetch('/api/categories')
+      .then(r => (r.ok ? r.json() : { categories: [] }))
+      .then(data => {
+        const list = data.categories || [];
+        setCategories(list);
+        setFormData(prev => (prev.category ? prev : { ...prev, category: list[0]?.slug ?? '' }));
+      })
+      .catch(() => {});
+  }, []);
 
   React.useEffect(() => {
     if (formData.title) {
@@ -62,10 +74,10 @@ export default function CreateArticlePage() {
       if (response.ok) {
         router.push('/dashboard/artikel');
       } else {
-        setError(data.error || 'Failed to create article');
+        setError(data.error || 'Gagal membuat artikel');
       }
     } catch (_err) {
-      setError('An error occurred while creating the article');
+      setError('Terjadi kesalahan saat membuat artikel');
     } finally {
       setLoading(false);
     }
@@ -79,10 +91,10 @@ export default function CreateArticlePage() {
           onClick={() => router.back()}
           variant="outlined"
         >
-          Back
+          Kembali
         </Button>
         <Typography variant="h4" sx={{ fontWeight: 600 }}>
-          Create New Article
+          Buat Artikel Baru
         </Typography>
       </Box>
 
@@ -97,7 +109,7 @@ export default function CreateArticlePage() {
           <Box component="form" onSubmit={handleSubmit}>
             <TextField
               fullWidth
-              label="Title"
+              label="Judul"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               required
@@ -109,36 +121,36 @@ export default function CreateArticlePage() {
               label="Slug"
               value={formData.slug}
               onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-              helperText="URL-friendly version of the title (auto-generated)"
+              helperText="Versi judul yang ramah URL (dibuat otomatis)"
               sx={{ mb: 3 }}
             />
 
             <FormControl fullWidth sx={{ mb: 3 }}>
-              <InputLabel>Category</InputLabel>
+              <InputLabel>Kategori</InputLabel>
               <Select
                 value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
-                label="Category"
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                label="Kategori"
                 required
               >
-                <MenuItem value="teknologi">Teknologi</MenuItem>
-                <MenuItem value="berita">Berita</MenuItem>
-                <MenuItem value="edukasi">Edukasi</MenuItem>
+                {categories.map(c => (
+                  <MenuItem key={c.id} value={c.slug}>{c.name}</MenuItem>
+                ))}
               </Select>
             </FormControl>
 
             <Box sx={{ mb: 3 }}>
               <TextField
                 fullWidth
-                label="Cover Image URL"
+                label="URL Gambar Sampul"
                 value={formData.image}
                 onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                helperText="Enter the URL of the cover image"
+                helperText="Masukkan URL gambar sampul"
               />
               {formData.image && (
                 <Box sx={{ mt: 2 }}>
                   <Typography variant="body2" sx={{ mb: 1, fontWeight: 500 }}>
-                    Image Preview:
+                    Pratinjau Gambar:
                   </Typography>
                   <Box
                     component="img"
@@ -163,12 +175,12 @@ export default function CreateArticlePage() {
 
             <TextField
               fullWidth
-              label="Content"
+              label="Konten"
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               multiline
               rows={15}
-              helperText="You can use Markdown formatting"
+              helperText="Anda dapat menggunakan format Markdown"
               sx={{ mb: 3 }}
             />
 
@@ -179,7 +191,7 @@ export default function CreateArticlePage() {
                   onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
                 />
               }
-              label="Publish article (uncheck to save as draft)"
+              label="Publikasikan artikel (hilangkan centang untuk menyimpan sebagai draf)"
               sx={{ mb: 4 }}
             />
 
@@ -191,7 +203,7 @@ export default function CreateArticlePage() {
                 disabled={loading}
                 size="large"
               >
-                {loading ? 'Creating...' : formData.published ? 'Publish Article' : 'Save as Draft'}
+                {loading ? 'Menyimpan...' : formData.published ? 'Publikasikan Artikel' : 'Simpan sebagai Draf'}
               </Button>
               <Button
                 variant="outlined"
@@ -199,7 +211,7 @@ export default function CreateArticlePage() {
                 disabled={loading}
                 size="large"
               >
-                Cancel
+                Batal
               </Button>
             </Box>
           </Box>
